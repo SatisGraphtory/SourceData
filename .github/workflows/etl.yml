@@ -8,12 +8,12 @@ jobs:
     steps:
       - name: Dispatch Work
         uses: mvasigh/dispatch-action@main
-          with:
-            token: ${{ secrets.PUSH_TOKEN }}
-            repo: 'SatisGraphtory/ToolBelt'
-            event_type: source-data-updated
-            message: |
-              {
-                "ref": "${{ github.ref }}",
-                "sha": "${{ github.sha }}"
-              }
+        with:
+          token: ${{ secrets.PUSH_TOKEN }}
+          repo: 'SatisGraphtory/ToolBelt'
+          event_type: source-data-updated
+          message: |
+            {
+              "ref": "${{ github.ref }}",
+              "sha": "${{ github.sha }}"
+            }
