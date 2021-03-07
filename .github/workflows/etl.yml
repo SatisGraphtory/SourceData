@@ -6,16 +6,14 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl \
-            --user "${{ secrets.GITHUB_AUTH }}" \
-            --request POST \
-            --header "Content-Type: application/json" \
-            --data '{
-              "event_type": "source-data-updated",
-              "client_payload": {
+      - name: Dispatch Work
+        uses: mvasigh/dispatch-action@main
+          with:
+            token: ${{ secrets.PUSH_TOKEN }}
+            repo: 'SatisGraphtory/ToolBelt'
+            event_type: source-data-updated
+            message: |
+              {
                 "ref": "${{ github.ref }}",
                 "sha": "${{ github.sha }}"
               }
-            }' \
-            https://api.github.com/repos/SatisGraphtory/ToolBelt/dispatches
