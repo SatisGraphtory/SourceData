@@ -4,13 +4,14 @@
 #include "FGItemPickup_Spawnable.generated.h"
 
 UCLASS( NotPlaceable )
-class AFGItemPickup_Spawnable : public AFGItemPickup
+class FACTORYGAME_API AFGItemPickup_Spawnable : public AFGItemPickup
 {
 	GENERATED_BODY()
 public:
 	AFGItemPickup_Spawnable();
 
 	//~ Begin AActor interface
+	virtual void PostLoad() override;
 	virtual void BeginPlay() override;
 	//~ End AActor interface
 

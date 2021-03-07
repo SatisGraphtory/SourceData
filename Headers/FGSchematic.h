@@ -7,6 +7,7 @@
 #include "AssetBundleData.h"
 #include "IncludeInBuild.h"
 #include "Styling/SlateBrush.h"
+#include "FGEventSubsystem.h"
 #include "FGSchematic.generated.h"
 
 //@todo [MODSUPPORT] This should maybe be implemented the same way as UFGBuildCategories?
@@ -35,6 +36,7 @@ enum class ESchematicType :uint8
 	EST_Prototype			UMETA( DisplayName = "Prototype" )
 };
 
+//@todo-cleanup Is this used? I cannot find any references to it
 /** Holds info about a schematic cost. */
 USTRUCT( BlueprintType )
 struct FMultipleItemStruct
@@ -104,6 +106,10 @@ public:
 	/** Returns true if this schematic is allowed to be purchased more than once */
 	UFUNCTION( BlueprintPure, Category = "Schematic" )
 	static bool IsRepeatPurchasesAllowed( TSubclassOf< UFGSchematic > inClass );
+
+	/** Returns the relevant events this schematic is present in. */
+	UFUNCTION( BlueprintPure, Category = "Schematic" )
+    static TArray< EEvents > GetRelevantEvents( TSubclassOf< UFGSchematic > inClass );
 
 	// Return true if we should include this schematic in the current build
 	UFUNCTION( BlueprintPure, Category = "Schematic" )
@@ -175,6 +181,10 @@ protected:
 	/** Is this schematic dependant on anything to be available for purchase? */
 	UPROPERTY( EditDefaultsOnly, Instanced, Category = "Dependencies" )
 	TArray< class UFGAvailabilityDependency* > mSchematicDependencies;
+
+	/** The events this schematic are present in */
+	UPROPERTY( EditDefaultsOnly, Category = "Events" )
+	TArray< EEvents > mRelevantEvents;
 
 	// Begin Deprecated
 	/** Is this schematic dependant on any other for being unlocked? */

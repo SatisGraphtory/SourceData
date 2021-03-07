@@ -19,7 +19,7 @@ enum class EOutlineColor : uint8
 };
 
 UCLASS()
-class UFGBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class FACTORYGAME_API UFGBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:
@@ -310,6 +310,14 @@ public:
 	**/
 	UFUNCTION( BlueprintCallable, Category = "Math" )
 	static bool EvaluateMathExpression( const FString& expression, UPARAM( DisplayName = "Result" ) FText& out_Result );
+
+	/** Convert a number of seconds into hour:minutes:seconds format string (including leading zeroes) */
+	UFUNCTION(BlueprintPure,  Category = "Utilities|String")
+    static FString SecondsToTimeString( float inSeconds );
+
+	/** Converts an 64-bit integer value to a string */
+	UFUNCTION(BlueprintPure, meta=(DisplayName = "ToString (integer64)", CompactNodeTitle = "->", BlueprintAutocast), Category="Utilities|String")
+    static FString Conv_IntToString(int64 InInt);
 
 	/** Does the same thing as UEditorAssetLibrary::SetMetadataTag but exposed to gameplay code since we have tools that are technically running as gameplay. Content of function is wrapped with editor only */
 	UFUNCTION( BlueprintCallable, Category = "Editor Scripting | Metadata", meta = ( DevelopmentOnly ) )

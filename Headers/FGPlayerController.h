@@ -19,7 +19,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnPresetHotbarChanged, int32, pres
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnHotbarIndexChanged, int32, newHotbarIndex );
 
 UCLASS( Config=Game)
-class AFGPlayerController : public AFGPlayerControllerBase
+class FACTORYGAME_API AFGPlayerController : public AFGPlayerControllerBase
 {
 	GENERATED_BODY()
 public:
@@ -294,6 +294,10 @@ public:
 		return Cast<T>(GetRemoteCallObjectOfClass(T::StaticClass()));
 	}
 
+	/** Returns the map area that the pawn is currently in */
+	UFUNCTION( BlueprintPure, Category = "Map" )
+    TSubclassOf< UFGMapArea > GetCurrentMapArea() const;
+
 protected:
 	/** Pontentially spawns deathcreate when disconnecting if we are dead */
 	void PonderRemoveDeadPawn();
@@ -348,10 +352,6 @@ protected:
 
 	/** Caches a lot off stuff needed for the map area checks */
 	bool InitMapAreaCheckFunction();
-
-	/** Returns the map area that the pawn is currently in */
-	UFUNCTION( BlueprintPure, Category = "Map" )
-	TSubclassOf< UFGMapArea > GetCurrentMapArea() const;
 
 	UFUNCTION( BlueprintCallable, Category = "Chat" )
 	void EnterChatMessage( const FString& inMessage );

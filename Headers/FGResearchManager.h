@@ -28,7 +28,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FResearchTreeUnlocked, TSubclassOf<
 * Contains data about the research conducted
 */
 USTRUCT()
-struct FResearchData
+struct FACTORYGAME_API FResearchData
 {
 	GENERATED_BODY()
 
@@ -65,7 +65,7 @@ FORCEINLINE bool IsValidForLoad( const FResearchData& element );
 * Keeps track of ongoing research and when it's supposed to be completed.
 */
 USTRUCT()
-struct FResearchTime
+struct FACTORYGAME_API FResearchTime
 {
 	GENERATED_BODY()
 
@@ -250,13 +250,16 @@ protected:
 	/** Called when the local player builds anything */
 	UFUNCTION()
 	void OnBuildingBuiltGlobal( class AFGBuildable* buildable );
+	
+	/** Checks if a research tree is valid for addition to the available research trees list. */
+	bool CanAddToAvailableResearchTrees( TSubclassOf< UFGResearchTree > researchTree ) const;
 
 	/** Whether multiple concurrent research can be conducted, or only one at a time. */
 	UPROPERTY( EditDefaultsOnly, Category = "Research" )
 	bool mCanConductMultipleResearch;
 
-	UPROPERTY( Transient )
-	TArray<TSubclassOf<class UFGResearchTree>> mAllResearchTrees;
+	UPROPERTY( Transient, Replicated )
+	TArray<TSubclassOf<class UFGResearchTree>> mAvailableResearchTrees;
 
 	UPROPERTY( SaveGame, Replicated )
 	TArray<TSubclassOf<class UFGResearchTree>> mUnlockedResearchTrees;

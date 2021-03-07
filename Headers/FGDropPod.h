@@ -10,7 +10,7 @@
 
 
 UCLASS()
-class AFGDropPod : public AActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
+class FACTORYGAME_API AFGDropPod : public AActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
 {
 	GENERATED_BODY()
 public:
@@ -18,7 +18,6 @@ public:
 
 	// Begin AActor interface
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
-	virtual void PostLoad() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay( const EEndPlayReason::Type endPlayReason ) override;
 	virtual void Tick( float DeltaSeconds ) override;
