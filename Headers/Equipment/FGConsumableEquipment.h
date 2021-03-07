@@ -5,7 +5,7 @@
 
 /** Used to hold consumeables, so we can eat berries, and consume medpacks a.s.o */
 UCLASS()
-class FACTORYGAME_API AFGConsumableEquipment : public AFGEquipment
+class AFGConsumableEquipment : public AFGEquipment
 {
 	GENERATED_BODY()
 public:

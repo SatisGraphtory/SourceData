@@ -7,22 +7,16 @@
 
 class UFGInteractWidget;
 
-/**
- * Delegate for when mouse button is pressed in Game UI.
- * This should be handle by a proper focus/UI system and this is a temporary workaround.
- */
+/** Delegate for when mouse button is pressed in Game UI. 
+This should be handle by a proper focus/UI system and this is a temporary workaround */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FOnMouseButtonDown, const FGeometry&, InGeometry, const FPointerEvent&, InMouseEvent );
 
 /**
- * Base class for the game UI located in the HUD.
- * 
- * This handles for example:
- *	Handling on screen audio messages.
- *	Handling pawn specific HUDs.
- *	Handling building interaction windows.
- */
+* Base class for all inventory widgets, contains a lot of helper functions to extract
+* interesting information buildings
+*/
 UCLASS()
-class FACTORYGAME_API UFGGameUI : public UFGBaseUI
+class UFGGameUI : public UFGBaseUI
 {
 	GENERATED_BODY()
 public:
@@ -30,9 +24,8 @@ public:
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable, Category = "UI" )
 	void PopAllWidgets(); 
 
-	// Begin UUserWidget interface
-	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime ) override;
-	// End UUserWidget interface
+	/** Tick tock */
+	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime );
 
 	/** Adds the cheat widget */
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )
@@ -42,7 +35,7 @@ public:
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )
 	void HandleFocusLost();
 
-	/** Returns widget stack */
+	/** Returnswidget stack */
 	UFUNCTION( BlueprintPure, Category = "UI" )
 	FORCEINLINE TArray< UFGInteractWidget * > GetInteractWidgetStack() { return mInteractWidgetStack; }
 
@@ -62,7 +55,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable , Category = "UI")
 	bool PopWidget(UFGInteractWidget* WidgetToRemove );
 
-	/** Returns widget array with pending messages */
+	/** Returnswidget array with pending messages */
 	UFUNCTION( BlueprintPure, Category = "UI" )
 	FORCEINLINE	TArray< TSubclassOf< class UFGMessageBase > > GetPendingMessages() { return mPendingMessages; }
 
@@ -90,7 +83,7 @@ public:
 	UFUNCTION( BlueprintPure, Category = "UI" )
 	FORCEINLINE class UFGAudioMessage* GetCurrentAudioMessage(){ return mCurrentAudioMessage; }
 
-	/** Called from in-game when the cancel key ( escape ) was pressed when no widget has focus */
+	/** Called from ingame when the cancel key ( escape ) was pressed when no widget has focus */
 	UFUNCTION( BlueprintCallable, Category = "UI" )
 	void CancelPressed();
 
@@ -98,7 +91,7 @@ public:
 	UFUNCTION( BlueprintNativeEvent, Category = "UI" )
 	void RemoveAudioMessage();
 
-	/** Returns the owning pawn by looking at owner and vehicle driver */
+	/** Returns the owning fgpawn by looking at ower and vehicle driver */
 	class AFGCharacterPlayer* GetFGCharacter();
 
 	/** Adds new tutorial info to be displayed */
@@ -133,11 +126,11 @@ public:
 	UFUNCTION( BlueprintCallable, BlueprintImplementableEvent, Category = "UI" )
 	void RemovePawnHUD();
 
-	/** Temp Solution to remove dependencies */
+	/** Temp Solution to remove depenencies*/
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )
 	void ShowDirectionalSubtitle(const FText& Subtitle, AActor* Instigator, float Duration , bool bUseDuration );
 	
-	/** Temp Solution to remove dependencies */
+	/** Temp Solution to remove depenencies*/
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )
 	void StopSubtitle(AActor* Instigator);
 
@@ -174,9 +167,9 @@ public:
 	void ShowQuickSearch();
 
 protected:
-	// Begin UUserWidget interface
+	// Begin UUserwidget interface
 	virtual FReply NativeOnPreviewMouseButtonDown( const FGeometry& InGeometry, const FPointerEvent& InMouseEvent ) override;
-	// End UUserWidget interface
+	// End UUserwidget interface
 
 public:
 	/** Array with messages that the player has stocked up */

@@ -17,15 +17,19 @@ enum class EDockStationType : uint8
 };
 
 /**
- * Interface for all dockable actors out there, i.e. trucks and trains.
+ * For blueprint support of the interface, we will never add anything to it, just use it to
+ * have a UCLASS to be able to access
  */
 UINTERFACE( Blueprintable )
-class FACTORYGAME_API UFGDockableInterface : public UInterface
+class UFGDockableInterface : public UInterface
 {
 	GENERATED_UINTERFACE_BODY()
 };
 
-class FACTORYGAME_API IFGDockableInterface
+/**
+ * @brief Interface for all dockable classes out there, i.e. trucks and trains.
+ */
+class IFGDockableInterface
 {
 	GENERATED_IINTERFACE_BODY()
 

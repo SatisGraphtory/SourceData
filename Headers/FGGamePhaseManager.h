@@ -28,7 +28,7 @@ enum EGamePhase
  * Used for specifying what tiers are included in what game phase.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FPhaseTierInfo
+struct FPhaseTierInfo
 {
 	GENERATED_BODY()
 
@@ -61,7 +61,7 @@ struct FACTORYGAME_API FPhaseTierInfo
 * This is used to specify the cost for the different phases of the game.
 */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FPhaseCost
+struct FPhaseCost
 {
 	GENERATED_BODY()
 

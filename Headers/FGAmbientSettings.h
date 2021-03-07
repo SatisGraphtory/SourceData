@@ -8,6 +8,7 @@ class UFGAmbientSettings : public UObject
 {
 	GENERATED_BODY()
 public:
+	/** ctor */
 	UFGAmbientSettings();
 
 	/** Get the event that is played whenever you get close to the ambient volume */

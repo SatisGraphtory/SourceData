@@ -3,11 +3,8 @@
 #include "FGHotbarShortcut.h"
 #include "FGRecipeShortcut.generated.h"
 
-/**
- * A specific type of hotbar shortcut that is used for building recipes.
- */
 UCLASS()
-class FACTORYGAME_API UFGRecipeShortcut : public UFGHotbarShortcut
+class UFGRecipeShortcut : public UFGHotbarShortcut
 {
 	GENERATED_BODY()
 public:

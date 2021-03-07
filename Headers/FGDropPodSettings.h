@@ -8,7 +8,7 @@
 
 /** Describes a package of items you can get in a drop. */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FDropPackage
+struct FDropPackage
 {
 	GENERATED_BODY()
 public:

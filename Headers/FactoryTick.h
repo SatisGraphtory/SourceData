@@ -7,7 +7,7 @@
  * Tick function that calls AFGBuildable::TickFactory
  */
 USTRUCT()
-struct FACTORYGAME_API FFactoryTickFunction : public FTickFunction
+struct FFactoryTickFunction : public FTickFunction
 {
 	GENERATED_USTRUCT_BODY()
 

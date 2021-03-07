@@ -4,7 +4,7 @@
 #include "FGItemPickup_Spawnable.generated.h"
 
 UCLASS( NotPlaceable )
-class FACTORYGAME_API AFGItemPickup_Spawnable : public AFGItemPickup
+class AFGItemPickup_Spawnable : public AFGItemPickup
 {
 	GENERATED_BODY()
 public:

@@ -7,7 +7,7 @@
 #define DEBUG_FOLIAGE_REMOVAL_SUBSYSTEM ( ( UE_BUILD_SHIPPING == 0 ) && 1 )
 
 UCLASS()
-class FACTORYGAME_API AFGFoliageRemovalSubsystem : public AFGSubsystem
+class AFGFoliageRemovalSubsystem : public AFGSubsystem
 {
 	GENERATED_BODY()
 public:
@@ -128,9 +128,9 @@ public:
 	void UnRegister( class AFGFoliageRemoval* actor );
 
 	/**
-	 * @return true if the foliage type is removable
+	 * @return true if the static mesh is removable
 	 */
-	bool IsRemovable( class UFoliageType* foliageType ) const;
+	virtual bool IsRemovable( class UStaticMesh* staticMesh ) const;
 
 	// Begin FactoryStatHelpers functions
 	int32 Stat_NumRemovedInstances() const;

@@ -8,12 +8,13 @@
 #include "FGResourceDeposit.generated.h"
 
 /**
- * A smaller resource deposit that can only be mined by hand.
+ * 
  */
 UCLASS()
 class FACTORYGAME_API AFGResourceDeposit : public AFGResourceNode
 {
 	GENERATED_BODY()
+	
 public:	
 	AFGResourceDeposit();
 

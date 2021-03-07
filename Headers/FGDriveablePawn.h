@@ -94,9 +94,6 @@ public:
 	UFUNCTION( BlueprintPure, Category = "Driveable" )
 	bool HasPendingDriver() const { return mHasPendingDriver; }
 
-	/** Helpers */
-	bool GetSafeExitLocation( class AFGCharacterPlayer* exitingCharacter, const FVector& exitOffset, FVector& out_location, FRotator& out_rotation ) const;
-
 protected:
 	/** When driving status changed for this vehicle. */
 	virtual void OnDrivingStatusChanged();
@@ -117,6 +114,8 @@ protected:
 	void SetDriving( bool isDriving );
 
 private:
+	/** Helpers */
+	bool GetSafeExitLocation( class AFGCharacterPlayer* exitingCharacter, const FVector& exitOffset, FVector& out_location, FRotator& out_rotation ) const;
 
 	/** Rep notifies */
 	UFUNCTION()

@@ -4,16 +4,17 @@
 
 #include "FGRadiationInterface.generated.h"
 
-/**
- * Interface for actors that can take damage by radiation.
- */
+
 UINTERFACE( Blueprintable )
-class FACTORYGAME_API UFGRadiationInterface : public UInterface
+class UFGRadiationInterface : public UInterface
 {
 	GENERATED_UINTERFACE_BODY()
 };
 
-class FACTORYGAME_API IFGRadiationInterface
+/**
+ * @brief Interface for all actors that can take damage by radiation.
+ */
+class IFGRadiationInterface
 {
 	GENERATED_IINTERFACE_BODY()
 

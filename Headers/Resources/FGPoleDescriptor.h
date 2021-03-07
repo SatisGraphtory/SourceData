@@ -9,7 +9,7 @@
  * Defines a pole height.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FPoleHeightMesh
+struct FPoleHeightMesh
 {
 	GENERATED_BODY()
 public:

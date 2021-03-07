@@ -51,7 +51,7 @@ struct FReplicatedRailroadVehicleState
 };
 
 USTRUCT()
-struct FACTORYGAME_API FRailroadVehicleInputRate
+struct FRailroadVehicleInputRate
 {
 	GENERATED_USTRUCT_BODY()
 

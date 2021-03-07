@@ -16,23 +16,14 @@ class FACTORYGAME_API UFGPopupConnectAccounts : public UFGPopupWidgetContent
 	GENERATED_BODY()
 	
 protected:
-	virtual void NativeConstruct() override;
-	virtual void NativeDestruct() override;
+	void NativeConstruct() override;
 
+	/** UFUNCTION so we can use it with a delegate */
 	UFUNCTION()
 	void OnNativeConnectAccountsEvent( const FName currentPlatform, EEosAccountConnectionResult result );
 	
 	UFUNCTION( BlueprintImplementableEvent )
 	void OnConnectAccountsEvent();
-
-	UFUNCTION()
-    void OnNativeWaitingForEOSConnectLoginUpdated();
-
-	UFUNCTION( BlueprintImplementableEvent )
-	void OnWaitingForEOSConnectLoginUpdated( bool waiting );
-
-	UFUNCTION( BlueprintCallable )
-	void ContinueWithoutMultiplayer();
 
 	UFUNCTION( BlueprintCallable )
 	void ConnectAccount();
@@ -63,9 +54,6 @@ protected:
 
 	UPROPERTY( BlueprintReadWrite )
 	EEosAccountConnectionResult mConnectionResult;
-
-	UPROPERTY( BlueprintReadOnly )
-	bool mIsWaitingForEOSConnectLoginResponse;
 
 private: 
 	UFGLocalPlayer* mLocalPlayer;

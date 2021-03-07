@@ -4,7 +4,7 @@
 #include "FGAudioVolumeSubsystem.generated.h"
 
 UCLASS(NotPlaceable)
-class FACTORYGAME_API AFGAudioVolumeSubsystem : public AFGSubsystem
+class AFGAudioVolumeSubsystem : public AFGSubsystem
 {
 	GENERATED_BODY()
 public:

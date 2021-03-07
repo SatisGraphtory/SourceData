@@ -65,7 +65,7 @@ public:
 	
 	/** Returns the number of points left until you receive the next coupon */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|ResourceSink" )
-	int64 GetNumPointsToNextCoupon() const;
+	int32 GetNumPointsToNextCoupon() const;
 	
 	/** Returns the percentage (normalized value) of your progression towards the next coupon */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|ResourceSink" )

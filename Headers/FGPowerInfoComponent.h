@@ -9,17 +9,10 @@
 
 
 /**
- * A power info is a component on buildings that lets them interact with the power circuit.
- *
- * The power info on a building must be registered with one of the building's power connections.
- * 
- * A building with a power info can for example:
- *   Request power from it.
- *   Produce power to it.
- *   See that status of the fuse.
+ * Default implementation for a powered building.
  */
 UCLASS( ClassGroup = ( Custom ), meta = ( BlueprintSpawnableComponent ) )
-class FACTORYGAME_API UFGPowerInfoComponent : public UActorComponent, public IFGSaveInterface
+class UFGPowerInfoComponent : public UActorComponent, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:

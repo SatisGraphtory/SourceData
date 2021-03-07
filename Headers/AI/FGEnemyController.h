@@ -22,7 +22,7 @@ enum class EIgnore : uint8
 * target is for our Pawn
 */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FAggroEntry
+struct FAggroEntry
 {
 	GENERATED_BODY();
 
@@ -67,14 +67,29 @@ struct FACTORYGAME_API FAggroEntry
 	float						LastIgnoreTime;
 };
 
+struct FFindByAggroTarget
+{
+	TScriptInterface< IFGAggroTargetInterface >	AggroTarget;
+
+	FFindByAggroTarget( TScriptInterface< IFGAggroTargetInterface > InAggroTarget ) : AggroTarget( InAggroTarget ) { }
+
+	bool operator() ( const FAggroEntry Element ) const
+	{
+		return ( AggroTarget == Element.AggroTarget );
+	}
+
+};
+
 /**
- * Base class for hostile creatures.
+ * 
  */
 UCLASS()
 class FACTORYGAME_API AFGEnemyController : public AFGCreatureController
 {
 	GENERATED_BODY()
+
 public:
+	/** ctor */
 	AFGEnemyController( const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get() );
 
 	//~ Begin AController Interface
@@ -82,9 +97,8 @@ public:
 	virtual void OnUnPossess() override;
 	//~ End AController Interface
 
-	// Begin AFGCreatureController interface
-	virtual void StartPanic_Implementation() override;
-	// End AFGCreatureController interface
+	/** Override the startpanic */
+	virtual void StartPanic_Implementation();
 
 	/**
 	 * Removes specified target from Aggro list                                                                    

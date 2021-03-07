@@ -20,7 +20,7 @@ DECLARE_DELEGATE( FOnHotbarReplicated );
  * Collected data for a slot that is specified
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FSlotData
+struct FSlotData
 {
 	GENERATED_BODY();
 
@@ -35,13 +35,14 @@ struct FACTORYGAME_API FSlotData
 	FORCEINLINE bool operator==( const FSlotData& other ) const{
 		return other.PingColor == PingColor && other.NametagColor == NametagColor;
 	}
+
 };
 
 /**
 * Data associated with a message
 */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FMessageData
+struct FMessageData
 {
 	GENERATED_BODY();
 
@@ -64,12 +65,14 @@ struct FACTORYGAME_API FMessageData
 * A hotbar with a set of shortcuts that can be assigned and executed
 */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FHotbar
+struct FHotbar
 {
 	GENERATED_BODY();
 
 	FHotbar(){}
+
 	FHotbar( class AFGPlayerState* owningState, const FHotbar& hotbar );
+
 	FHotbar( TArray< class UFGHotbarShortcut* > hotbarShortcuts );
 
 	UPROPERTY( SaveGame, BlueprintReadOnly )
@@ -80,12 +83,14 @@ struct FACTORYGAME_API FHotbar
 * A preset represents a way for players to create pre made hotbars they can replace there current hotbar with
 */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FPresetHotbar
+struct FPresetHotbar
 {
 	GENERATED_BODY();
 
 	FPresetHotbar(){}
+
 	FPresetHotbar( class AFGPlayerState* owningState, const FPresetHotbar& presetHotbar );
+
 	FPresetHotbar( FText presetName, uint8 iconIndex, FHotbar hotbar ) :
 		PresetName( presetName ),
 		IconIndex( iconIndex ),
@@ -217,6 +222,7 @@ public:
 		check( T::StaticClass()->IsChildOf( UFGHotbarShortcut::StaticClass() ) );
 		return Cast< T >( CreateShortcut( shortcutClass ) );
 	}
+
 
 	/** Get current shortcuts */
 	void GetCurrentShortcuts( TArray< class UFGHotbarShortcut* >& out_shortcuts );

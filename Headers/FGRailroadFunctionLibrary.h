@@ -12,7 +12,7 @@
  * Function library for railroad related functions.
  */
 UCLASS()
-class FACTORYGAME_API UFGRailroadFunctionLibrary : public UBlueprintFunctionLibrary
+class UFGRailroadFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

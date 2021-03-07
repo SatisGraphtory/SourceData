@@ -52,10 +52,11 @@ struct FSkySphereSettings
 };
 
 UCLASS(HideCategories=(Input,Rendering))
-class FACTORYGAME_API AFGSkySphere : public AActor, public ICurvePanningInterface
+class AFGSkySphere : public AActor, public ICurvePanningInterface
 {
 	GENERATED_BODY()
 public:
+	/** ctor */
 	AFGSkySphere();
 
 	// Begin AActor interface

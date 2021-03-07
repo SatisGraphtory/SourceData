@@ -2,19 +2,22 @@
 
 #pragma once
 
-#include "FGInventoryComponent.h"
 #include "FGChainsawableInterface.generated.h"
 
 /**
- * Actors that implement this interface will be considered by the chainsaw to be chainsawable.
- */
+* For blueprint support of the interface, we will never add anything to it, just use it to
+* have a UCLASS to be able to access
+*/
 UINTERFACE( Blueprintable )
-class FACTORYGAME_API UFGChainsawableInterface : public UInterface
+class UFGChainsawableInterface : public UInterface
 {
 	GENERATED_UINTERFACE_BODY()
 };
 
-class FACTORYGAME_API IFGChainsawableInterface
+/**
+ * Actors attached that implement this interface will be considered by the chainsaw to be chainsawable.
+ */
+class IFGChainsawableInterface
 {
 	GENERATED_IINTERFACE_BODY()
 

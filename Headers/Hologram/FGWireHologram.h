@@ -114,5 +114,6 @@ private:
 	UPROPERTY()
 	UStaticMeshComponent* mWireMesh;
 
-	TWeakObjectPtr< class AFGBuildableWire > mUpgradeTarget;
+	UPROPERTY()
+	class AFGBuildableWire* mUpgradeTarget;
 };

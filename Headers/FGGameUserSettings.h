@@ -159,9 +159,6 @@ public:
 	/** Update if a restart is required for setttings to take full effect */
 	void UpdateIsRestartRequired();
 
-	/** Update if a restart of the game is required for setttings to take full effect */
-	void UpdateIsRestartOfGameRequired();
-
 	/** Is the provided setting using a custom quality setting  */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Settings" )
 	bool IsUsingCustomQualitySetting( FString settingName );
@@ -205,17 +202,9 @@ public:
 	UFUNCTION( BlueprintPure, Category="FactoryGame|Settings")
 	bool GetRequireRestart() const{ return mRestartRequired; }
 
-	/** Clear that we require restart of session for settings to apply */
+	/** Clear that we require restart for setting to apply */
 	UFUNCTION( BlueprintCallable, Category="FactoryGame|Settings")
 	void ClearRequireRestart(){ mRestartRequired = false; }
-
-	/** Get if we require restart of the game for settings to apply */
-	UFUNCTION( BlueprintPure, Category="FactoryGame|Settings")
-    bool GetRequireRestartOfGame() const { return mRestartOfGameRequired; }
-
-	/** Clear that we require restart of the game for settings to apply */
-	UFUNCTION( BlueprintCallable, Category="FactoryGame|Settings")
-    void ClearRequireRestartOfGame(){ mRestartOfGameRequired = false; }
 
 	/** Gets the autosave interval */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Settings" )
@@ -377,11 +366,8 @@ protected:
 	UPROPERTY( Config )
 	uint8 mAnalyticsDisabled:1;
 
-	/** If true, then we require a restart of the session to properly apply the settings */
+	/** If true, then we require a restart to properly apply the settings */
 	uint8 mRestartRequired:1;
-
-	/** If true, then we require a restart of the game to properly apply the settings */
-	uint8 mRestartOfGameRequired:1;
 
 	/** How often in seconds to autosave */
 	UPROPERTY( Config )

@@ -5,9 +5,6 @@
 #include "DefaultValueHelper.h"
 #include "FGFactoryLegsComponent.generated.h"
 
-/**
- * Information about one leg on a factory.
- */
 USTRUCT()
 struct FFeetOffset
 {
@@ -20,7 +17,7 @@ public:
 
 	FName GetSocket() const;
 public:
-	/** The index from the foot's socket name, i.e. foot_04 would be 4. */
+	/** The name of the foot's socket. */
 	UPROPERTY( SaveGame )
 	uint8 FeetIndex;
 
@@ -33,15 +30,8 @@ public:
 	bool IsValidOffset;
 };
 
-/**
- * Class that manages the legs on a factory.
- * This component does:
- *   Trace for foot offsets for each leg.
- *   Save the offsets in the save game.
- *   Auto-create the legs on register and remove them on unregister.
- */
 UCLASS( ClassGroup = ( Custom ), meta = ( BlueprintSpawnableComponent ) )
-class FACTORYGAME_API UFGFactoryLegsComponent : public USceneComponent, public IFGSaveInterface
+class UFGFactoryLegsComponent : public USceneComponent, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:

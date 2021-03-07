@@ -14,7 +14,7 @@
  * This is a way to represent a position on the railroad.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FRailroadTrackPosition
+struct FRailroadTrackPosition
 {
 	GENERATED_BODY()
 public:

@@ -15,7 +15,7 @@ enum class ECycleDirection : uint8
 };
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FScannableDetails
+struct FScannableDetails
 {
 	GENERATED_BODY()
 
@@ -230,7 +230,7 @@ private:
 
 
 UCLASS()
-class FACTORYGAME_API AFGObjectScannerAttachment : public AFGEquipmentAttachment
+class AFGObjectScannerAttachment : public AFGEquipmentAttachment
 {
 	GENERATED_BODY()
 

@@ -8,7 +8,7 @@
 #include "FGBuildableJumppad.generated.h"
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FTrajectoryData
+struct FTrajectoryData
 {
 	GENERATED_BODY()
 
@@ -17,7 +17,7 @@ struct FACTORYGAME_API FTrajectoryData
 	TArray<FVector> TrajectoryPoints;
 };
 
-struct FACTORYGAME_API TrackedJumpPadPlayer
+struct TrackedJumpPadPlayer
 {
 	TrackedJumpPadPlayer( class AFGCharacterPlayer* PlayerToTrack, float InitialTimeStamp )
 		: pPlayer( PlayerToTrack )
@@ -34,7 +34,7 @@ struct FACTORYGAME_API TrackedJumpPadPlayer
 DECLARE_LOG_CATEGORY_EXTERN( LogJumpPad, Log, All );
 
 /**
- * Base class for the jump pads.
+ * 
  */
 UCLASS()
 class FACTORYGAME_API AFGBuildableJumppad : public AFGBuildableFactory

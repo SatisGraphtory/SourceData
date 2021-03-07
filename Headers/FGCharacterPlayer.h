@@ -27,7 +27,7 @@ enum class ECameraMode : uint8
 
 /** structure that holds variables per input whether it's allowed or not. NOTE: True if input is disabled. */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FDisabledInputGate
+struct FDisabledInputGate
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -80,7 +80,7 @@ public:
 * not dead, cant revive
 */
 UCLASS()
-class FACTORYGAME_API UFGUseState_ReviveInvalid_PlayerNotDead : public UFGUseState
+class UFGUseState_ReviveInvalid_PlayerNotDead : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -91,7 +91,7 @@ public:
 * Revive valid
 */
 UCLASS()
-class FACTORYGAME_API UFGUseState_ReviveValid : public UFGUseState
+class UFGUseState_ReviveValid : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -102,7 +102,7 @@ public:
  * Base class for all player characters in the game.
  */
 UCLASS( config = Game )
-class FACTORYGAME_API AFGCharacterPlayer : public AFGCharacterBase, public IFGAggroTargetInterface, public IFGUseableInterface, public IFGRadiationInterface
+class AFGCharacterPlayer : public AFGCharacterBase, public IFGAggroTargetInterface, public IFGUseableInterface, public IFGRadiationInterface
 {
 	GENERATED_BODY()
 public:
@@ -178,9 +178,6 @@ public:
 	virtual bool ShouldSave_Implementation() const override;
 	virtual void PostLoadGame_Implementation( int32 saveVersion, int32 gameVersion ) override;
 	//~End IFGSaveInterface
-
-	// Setup run when this player ahve been possessed.
-	void OnPossessedSetup();
 
 	/** Blueprint function that ticks visual things not needed on dedicated server */
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCosmetic, Category = "Character" )

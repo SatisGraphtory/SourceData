@@ -12,7 +12,7 @@ class UFGRecipe;
  * The resulting DAG from a flow analysis.
  */
 USTRUCT( BlueprintType, Category = "FactoryGame|MaterialFlow" )
-struct FACTORYGAME_API FMaterialFlowGraph
+struct FMaterialFlowGraph
 {
 	GENERATED_BODY()
 public:
@@ -41,7 +41,7 @@ private:
  * Input/output in the flow analysis.
  */
 USTRUCT( BlueprintType, Category = "FactoryGame|MaterialFlow" )
-struct FACTORYGAME_API FMaterialFlowConnection
+struct FMaterialFlowConnection
 {
 	GENERATED_BODY();
 public:
@@ -70,7 +70,7 @@ public:
  * Material flow node.
  */
 USTRUCT( BlueprintType, Category = "FactoryGame|MaterialFlow" )
-struct FACTORYGAME_API FMaterialFlowNode
+struct FMaterialFlowNode
 {
 	GENERATED_BODY();
 public:
@@ -101,7 +101,7 @@ public:
  * Function library for material flow analysis in the factory.
  */
 UCLASS()
-class FACTORYGAME_API UFGMaterialFlowAnalysisFunctionLibrary : public UBlueprintFunctionLibrary
+class UFGMaterialFlowAnalysisFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

@@ -10,7 +10,7 @@
 #include "SharedInventoryStatePtr.generated.h"
 
 USTRUCT()
-struct FACTORYGAME_API FSharedInventoryStatePtr
+struct FSharedInventoryStatePtr
 {
 	GENERATED_USTRUCT_BODY()
 public:

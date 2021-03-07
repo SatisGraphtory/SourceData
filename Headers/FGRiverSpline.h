@@ -4,7 +4,7 @@
 #include "FGRiverSpline.generated.h"
 
 UCLASS()
-class FACTORYGAME_API AFGRiverSpline : public AActor
+class AFGRiverSpline : public AActor
 {
 	GENERATED_BODY()
 public:

@@ -9,19 +9,20 @@
 #include "FGBaseUI.generated.h"
 
 /**
- * @todo Please comment me
+ * 
  */
 UCLASS()
 class FACTORYGAME_API UFGBaseUI : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	/** ctor */
 	UFGBaseUI( const FObjectInitializer& ObjectInitializer );
 
-	// Begin UUserWidget interface
-	virtual void NativeConstruct() override;
-	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime ) override;
-	// End UUserWidget interface
+	virtual void NativeConstruct();
+
+	/** Tick tock */
+	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime );
 
 	/** Creates a popup */
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )

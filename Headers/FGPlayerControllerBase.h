@@ -5,13 +5,17 @@
 #include "PlayerPresenceState.h"
 #include "FGPlayerControllerBase.generated.h"
 
+
+
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE( FOnInputChanged );
 
 UCLASS()
-class FACTORYGAME_API AFGPlayerControllerBase : public APlayerController
+class AFGPlayerControllerBase : public APlayerController
 {
 	GENERATED_BODY()
 public:
+	/** Ctor */
 	AFGPlayerControllerBase();
 
 	// Begin AActor interface

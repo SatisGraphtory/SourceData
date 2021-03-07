@@ -2,14 +2,14 @@
 
 #include "GameFramework/Actor.h"
 #include "FGUseableInterface.h"
-#include "FGStaticReplicatedActor.h"
 #include "FGInteractActor.generated.h"
 
 UCLASS( abstract )
-class FACTORYGAME_API AFGInteractActor : public AFGStaticReplicatedActor, public IFGUseableInterface
+class AFGInteractActor : public AActor, public IFGUseableInterface
 {
 	GENERATED_BODY()
 public:
+	/** ctor */
 	AFGInteractActor();
 
 	/** Called when player interacts with this actor	*/

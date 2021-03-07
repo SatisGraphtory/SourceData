@@ -39,16 +39,19 @@ bool SAVE_CLASS::NeedTransform_Implementation(){ return NeedTransform; } \
 bool SAVE_CLASS::ShouldSave_Implementation() const { return true; }
 
 /**
- * If you want your actor to be saved, implement this!
- * This will make an actor be detected by the save system and have it's SaveGame properties saved.
- */
+* For blueprint support of the interface, we will never add anything to it, just use it to
+* have a UCLASS to be able to access
+*/
 UINTERFACE( Blueprintable )
-class FACTORYGAME_API UFGSaveInterface : public UInterface
+class UFGSaveInterface : public UInterface
 {
 	GENERATED_UINTERFACE_BODY()
 };
 
-class FACTORYGAME_API IFGSaveInterface
+/**
+* @brief If you want your actor to be saved, implement this!
+*/
+class IFGSaveInterface
 {
 	GENERATED_IINTERFACE_BODY()
 

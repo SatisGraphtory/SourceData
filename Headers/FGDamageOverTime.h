@@ -7,10 +7,11 @@
  * Shareable info about damage over time 
  */
 UCLASS( abstract, Blueprintable )
-class FACTORYGAME_API UFGDamageOverTime : public UObject
+class UFGDamageOverTime : public UObject
 {
 	GENERATED_BODY()
 public:
+	/** ctor */
 	UFGDamageOverTime();
 
 	/**

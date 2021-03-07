@@ -2,7 +2,6 @@
 
 #include "WheeledVehicleMovementComponent4W.h"
 #include "FGWheeledVehicle.h"
-#include "DSOLGearbox.h"
 #include "FGWheeledVehicleMovementComponent4W.generated.h"
 
 UCLASS(meta = (BlueprintSpawnableComponent))

@@ -41,7 +41,7 @@ struct FItemSettings
 
 /**  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FResourceDepositPackage
+struct FResourceDepositPackage
 {
 	GENERATED_BODY()
 

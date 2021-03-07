@@ -51,7 +51,7 @@ enum class ETrainDockingState : uint8
 };
 
 /** Global constants for trains. */
-struct FACTORYGAME_API TrainConstants
+struct TrainConstants
 {
 	// At which distance can a station start catching the train. [cm]
 	static float CATCH_DISTANCE;
@@ -70,7 +70,7 @@ struct FACTORYGAME_API TrainConstants
  * I.e. the locomotives, railcars, length and tare weight.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FTrainConsist
+struct FTrainConsist
 {
 GENERATED_BODY()
 public:
@@ -101,7 +101,7 @@ public:
 };
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FTrainAtcPoint
+struct FTrainAtcPoint
 {
 	GENERATED_BODY()
 public:
@@ -131,7 +131,7 @@ public:
  * As a safety/guidance system for when the player is driving.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FTrainAtcData
+struct FTrainAtcData
 {
 	GENERATED_BODY()
 public:
@@ -201,7 +201,7 @@ enum class ESelfDrivingLocomotiveState : uint8
  * Realtime data for the ai.
  */
 USTRUCT()
-struct FACTORYGAME_API FTrainSelfDrivingData
+struct FTrainSelfDrivingData
 {
 	GENERATED_BODY()
 public:
@@ -226,7 +226,7 @@ public:
  * The physics simulation data for the trains.
  */
 USTRUCT()
-struct FACTORYGAME_API FTrainSimulationData
+struct FTrainSimulationData
 {
 	GENERATED_BODY()
 public:

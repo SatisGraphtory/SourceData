@@ -11,7 +11,7 @@
  * Valid state for picking up conveyor belt items.
  */
 UCLASS()
-class FACTORYGAME_API UFGUseState_ConveyorBeltValid : public UFGUseState
+class UFGUseState_ConveyorBeltValid : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -25,7 +25,7 @@ public:
 };
 
 UCLASS()
-class FACTORYGAME_API UFGUseState_ConveyorBeltFullInventory : public UFGUseState
+class UFGUseState_ConveyorBeltFullInventory : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -40,7 +40,7 @@ public:
  * State for when the belt is empty.
  */
 UCLASS()
-class FACTORYGAME_API UFGUseState_ConveyorBeltEmpty : public UFGUseState
+class UFGUseState_ConveyorBeltEmpty : public UFGUseState
 {
 	GENERATED_BODY()
 public:

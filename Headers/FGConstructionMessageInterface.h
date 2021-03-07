@@ -3,9 +3,6 @@
 #include "FGBuildableSubsystem.h"
 #include "FGConstructionMessageInterface.generated.h"
 
-/**
- * @todo Please comment me
- */
 USTRUCT()
 struct FConstructHologramMessage
 {
@@ -40,18 +37,21 @@ struct FConstructHologramMessage
 };
 
 /**
- * @todo Please comment me
- */
+*
+*/
 UINTERFACE(Blueprintable)
-class FACTORYGAME_API UFGConstructionMessageInterface : public UInterface
+class UFGConstructionMessageInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-//@todo Why is this only on one hologram and not all holograms that do construction messages?
-class FACTORYGAME_API IFGConstructionMessageInterface
+/**
+*
+*/
+class IFGConstructionMessageInterface
 {
 	GENERATED_BODY()
+
 public:
 	virtual void SerializeConstructMessage( FArchive& ar, FNetConstructionID id ) = 0;
 

@@ -4,7 +4,7 @@
 
 
 UCLASS()
-class FACTORYGAME_API UFGCombatFunctionLibrary : public UBlueprintFunctionLibrary
+class UFGCombatFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

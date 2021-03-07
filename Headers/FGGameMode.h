@@ -8,8 +8,8 @@
 
 class UFGRemoteCallObject;
 
-UCLASS( config = Game )
-class FACTORYGAME_API AFGGameMode : public AGameMode, public IFGSaveInterface
+UCLASS(minimalapi, config = Game )
+class AFGGameMode : public AGameMode, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:
@@ -146,7 +146,7 @@ private:
 	* This is just a failsafe when loading a save file on a new platform. Otherwise this logic is handled by AGameMode::FindInactivePlayer
 	* Returns true for some special cases. Check implementation for more details
 	*/
-	bool CompareUniqueNetIdBetweenOSS( const FUniqueNetIdRepl& newID, const FUniqueNetIdRepl& savedID );
+	bool CompareUniqueNetIdBetweenOSS( FUniqueNetIdRepl& newID, FUniqueNetIdRepl& savedID );
 
 protected:
 	UPROPERTY()

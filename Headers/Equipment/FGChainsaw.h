@@ -6,7 +6,7 @@
 
 
 USTRUCT()
-struct FACTORYGAME_API FPickedUpInstance
+struct FPickedUpInstance
 {
 	GENERATED_BODY()
 
@@ -30,7 +30,7 @@ struct FACTORYGAME_API FPickedUpInstance
 };
 
 UCLASS()
-class FACTORYGAME_API AFGChainsaw : public AFGEquipment
+class AFGChainsaw : public AFGEquipment
 {
 	GENERATED_BODY()
 public:

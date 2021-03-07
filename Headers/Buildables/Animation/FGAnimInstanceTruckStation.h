@@ -8,7 +8,7 @@
 #include "FGAnimInstanceTruckStation.generated.h"
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FAnimInstanceProxyTruckStation : public FAnimInstanceProxy
+struct FAnimInstanceProxyTruckStation : public FAnimInstanceProxy
 {
 	GENERATED_BODY()
 
@@ -31,11 +31,14 @@ struct FACTORYGAME_API FAnimInstanceProxyTruckStation : public FAnimInstanceProx
 	{
 	}
 
-	// Begin FAnimInstanceProxy
+	/** Called when our anim instance is being initialized */
 	virtual void Initialize( UAnimInstance* InAnimInstance ) override;
+
 	virtual void PreUpdate( UAnimInstance* InAnimInstance, float DeltaSeconds ) override;
+
 	virtual void Update( float DeltaSeconds ) override;
-	// End FAnimInstanceProxy
+
+
 public:
 	UPROPERTY( Transient, BlueprintReadWrite, EditAnywhere, Category = "Anim" )
 	FName StateMachineName;
@@ -73,15 +76,28 @@ public:
 	uint8 UnloadToOfflineTransition : 1;
 };
 
+/**
+ * 
+ */
 UCLASS()
 class FACTORYGAME_API UFGAnimInstanceTruckStation : public UAnimInstance
 {
 	GENERATED_BODY()
 protected:
-	// Begin UAnimInstance
-	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override { return &mProxy; }
-	virtual void DestroyAnimInstanceProxy( FAnimInstanceProxy* InProxy ) override {}
-	// End UAnimInstance
+	UPROPERTY( Transient, BlueprintReadOnly, Category = "Factory Anim", meta = (AllowPrivateAccess = "true") )
+	FAnimInstanceProxyTruckStation mProxy;;
+
+	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override
+	{
+		return &mProxy;
+	}
+
+	virtual void DestroyAnimInstanceProxy( FAnimInstanceProxy* InProxy ) override
+	{
+
+	}
+
+	friend struct FAnimInstanceProxyTruckStation;
 public:
 	/** Time factory should spend ramping up */
 	UPROPERTY( EditDefaultsOnly, Category = "Anim" )
@@ -94,7 +110,4 @@ public:
 	/**Name of the state machine that does stuff*/
 	UPROPERTY( EditDefaultsOnly, Category = "Anim" )
 	FName mStateMachineName;
-protected:
-	UPROPERTY( Transient, BlueprintReadOnly, Category = "Factory Anim", meta = (AllowPrivateAccess = "true") )
-	FAnimInstanceProxyTruckStation mProxy;
 };

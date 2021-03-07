@@ -17,7 +17,6 @@ class FACTORYGAME_API AFGReplicationDetailActor_DockingStation : public AFGRepli
 public:
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
 	virtual void InitReplicationDetailActor( class AFGBuildable* owningActor ) override;
-	virtual void RemoveDetailActorFromOwner() override;
 	virtual void FlushReplicationActorStateToOwner() override;
 	virtual bool HasCompletedInitialReplication() const override;
 

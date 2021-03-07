@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "FGCharacterMovementComponent.generated.h"
 
+class AFGBuildablePipeBase;
 
 
 USTRUCT( BlueprintType )

@@ -19,7 +19,7 @@ enum EPlayOnDamageEvent
 };
 
 UCLASS()
-class FACTORYGAME_API UFGDamageType : public UDamageType
+class UFGDamageType : public UDamageType
 {
 	GENERATED_BODY()
 public:

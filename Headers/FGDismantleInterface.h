@@ -4,15 +4,19 @@
 #include "FGDismantleInterface.generated.h"
 
 /**
- * Interface for actors that can be dismantled by the buildgun.
- */
+* For blueprint support of the interface, we will never add anything to it, just use it to
+* have a UCLASS to be able to access
+*/
 UINTERFACE( Blueprintable )
-class FACTORYGAME_API UFGDismantleInterface : public UInterface
+class UFGDismantleInterface : public UInterface
 {
 	GENERATED_UINTERFACE_BODY()
 };
 
-class FACTORYGAME_API IFGDismantleInterface
+/**
+* @brief Interface for all "dismantle-able" classes out there
+*/
+class IFGDismantleInterface
 {
 	GENERATED_IINTERFACE_BODY()
 
@@ -74,7 +78,7 @@ class FACTORYGAME_API IFGDismantleInterface
 /**
  * Shared magic between holograms
  */
-struct FACTORYGAME_API FDismantleHelpers
+struct FDismantleHelpers
 {
 	/**
 	 * @param dismantledActor	Actor to be dismantled.

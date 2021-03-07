@@ -10,7 +10,7 @@
  * A stop entry in the time table.
  */
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FTimeTableStop
+struct FTimeTableStop
 {
 	GENERATED_BODY()
 public:

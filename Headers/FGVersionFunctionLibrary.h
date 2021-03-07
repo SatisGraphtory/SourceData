@@ -12,7 +12,7 @@ enum class EGameVersion : uint8
 };
 
 UCLASS()
-class FACTORYGAME_API UFGVersionFunctionLibrary : public UBlueprintFunctionLibrary
+class UFGVersionFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

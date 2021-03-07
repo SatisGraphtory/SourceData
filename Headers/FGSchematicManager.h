@@ -14,7 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnActiveSchematicChanged, TSubclas
 
 /** Holds info about a schematic and How much has been paid of on it. */
 USTRUCT()
-struct FACTORYGAME_API FSchematicCost
+struct FSchematicCost
 {
 	GENERATED_BODY()
 

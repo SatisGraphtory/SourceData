@@ -21,7 +21,7 @@ enum class EFGChatMessageType : uint8
 };
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FChatMessageStruct
+struct FChatMessageStruct
 {
 	GENERATED_BODY()
 public:

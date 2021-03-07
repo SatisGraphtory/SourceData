@@ -9,7 +9,6 @@
 #include "FGExtractableResourceInterface.h"
 #include "FGActorRepresentationInterface.h"
 #include "FGSignificanceInterface.h"
-#include "FGStaticReplicatedActor.h"
 #include "FGResourceNode.generated.h"
 
 class UFGResourceDescriptor;
@@ -36,7 +35,7 @@ enum EResourcePurity
 };
 
 USTRUCT( BlueprintType )
-struct FACTORYGAME_API FPurityTextPair
+struct FPurityTextPair
 {
 	GENERATED_BODY()
 
@@ -56,10 +55,10 @@ struct FACTORYGAME_API FPurityTextPair
 };
 
 /**
- * Use state when inventory of player looking at the node has a full inventory
- */
+* Use state when inventory of player looking at the node has a full inventory
+*/
 UCLASS()
-class FACTORYGAME_API UFGUseState_NodeFullInventory : public UFGUseState
+class UFGUseState_NodeFullInventory : public UFGUseState
 {
 	GENERATED_BODY()
 
@@ -67,28 +66,29 @@ class FACTORYGAME_API UFGUseState_NodeFullInventory : public UFGUseState
 };
 
 /**
- * The resource we are trying to pick can't be on a conveyor belt.
- */
+* The resource we are trying to pick can't be on a conveyor belt.
+*/
 UCLASS()
-class FACTORYGAME_API UFGUseState_NonConveyorResource : public UFGUseState
+class UFGUseState_NonConveyorResource : public UFGUseState
 {
 	GENERATED_BODY()
 
 	UFGUseState_NonConveyorResource() : Super() { mIsUsableState = false; }
 };
 
-/**
- * Base class for extractable resources in the game, can be hand or machine mined.
- */
 UCLASS(Blueprintable,abstract)
-class FACTORYGAME_API AFGResourceNode : public AFGStaticReplicatedActor, public IFGExtractableResourceInterface, public IFGSaveInterface, public IFGUseableInterface, public IFGSignificanceInterface
+class FACTORYGAME_API AFGResourceNode : public AActor, public IFGExtractableResourceInterface, public IFGSaveInterface, public IFGUseableInterface, public IFGSignificanceInterface
 {
 	GENERATED_BODY()
+	
 public:	
+	/** Decide on what properties to replicate */
+	void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
+
+	// Sets default values for this actor's properties
 	AFGResourceNode();
 
 	// Begin UObject interface
-	void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
 	virtual void PostLoad() override;
 	// End UObject interface
 

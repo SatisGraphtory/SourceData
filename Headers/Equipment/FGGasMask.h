@@ -7,15 +7,16 @@
 #include "FGGasMask.generated.h"
 
 UCLASS()
-class FACTORYGAME_API AFGGasMask : public AFGEquipment
+class AFGGasMask : public AFGEquipment
 {
 	GENERATED_BODY()
 public:
+	/** Ctor */
 	AFGGasMask();
 };
 
 UCLASS()
-class FACTORYGAME_API AFGGasMaskAttachment : public AFGEquipmentAttachment
+class AFGGasMaskAttachment : public AFGEquipmentAttachment
 {
 	GENERATED_BODY()
 };

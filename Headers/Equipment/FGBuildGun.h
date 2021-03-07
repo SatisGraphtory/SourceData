@@ -45,10 +45,10 @@ public:
 	virtual bool IsSupportedForNetworking() const override;
 
 	/** This is overloaded so that we can call Server/Client functions in this object by using the Callspace of the outer BuildGun. */
-	virtual int32 GetFunctionCallspace( UFunction* Function, FFrame* Stack ) override;
+	int32 GetFunctionCallspace( UFunction* Function, void* Parameters, FFrame* Stack ) override;
 
 	/** This is overloaded so that we can call Server/Client functions in this object by using the NetDriver of the outer BuildGun.*/
-	virtual bool CallRemoteFunction( UFunction* Function, void* Parameters, FOutParmRec* OutParms, FFrame* Stack ) override;
+	bool CallRemoteFunction( UFunction* Function, void* Parameters, FOutParmRec* OutParms, FFrame* Stack ) override;
 
 	/** Checks if the outer build gun has authority. */
 	UFUNCTION( BlueprintPure, Category = "BuildGunState" )
@@ -423,7 +423,7 @@ private:
  * Attachment for the build gun.
  */
 UCLASS()
-class FACTORYGAME_API AFGBuildGunAttachment : public AFGEquipmentAttachment
+class AFGBuildGunAttachment : public AFGEquipmentAttachment
 {
 	GENERATED_BODY()
 };

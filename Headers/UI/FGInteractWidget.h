@@ -6,13 +6,15 @@
 
 
 /**
- * Base class for stackable widgets in the game such as building interaction windows.
+ * Base class for all stackable widgets in the game.
  */
 UCLASS( config = Engine )
-class FACTORYGAME_API UFGInteractWidget : public UUserWidget
+class UFGInteractWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	//@todo Comments?
+
 	UFGInteractWidget( const FObjectInitializer& ObjectInitializer );
 
 	UFUNCTION( BlueprintNativeEvent, Category = "UI" )
@@ -61,11 +63,11 @@ public:
 	UFUNCTION( BlueprintPure, Category = "UI" )
 	FORCEINLINE bool GetUseGamepadCursor() { return mUseGamepadCursor; }
 
-	/** Sets default focus widget */
+	/** Sets default focuswidget */
 	UFUNCTION( BlueprintCallable, Category = "UI" )
 	void SetDefaultFocusWidget( UWidget* focusWidget );
 
-	/** Returns default focus widget */
+	/** Returns default focuswidget */
 	UFUNCTION( BlueprintPure, Category = "UI" )
 	FORCEINLINE UWidget* GetDefaultFocusWidget() { return mDefaultFocusWidget; }
 
@@ -85,18 +87,16 @@ public:
 	UFUNCTION( BlueprintPure, Category = "Custom Tick" )
 	FORCEINLINE float GetCustomTickRate() const { return mCustomTickRate; }
 
-protected:
-	// Begin UUserWidget interface
+protected: 
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 	virtual void NativeOnRemovedFromFocusPath( const FFocusEvent& InFocusEvent ) override;
-	// End UUserWidget interface
-
 	// Requirement check to verify before calling blueprint Init
 	virtual bool NativeCanCallInit();
+	
 
 private: 
-	/** Internal function that checks for requirements being met before calling init */
+	/** Internal function that checks for requierments being met before calling init */
 	void NativeTestAndQueueInit();
 
 public:
@@ -140,7 +140,6 @@ public:
 	/** Class of the default widget we want to give focus to */
 	UPROPERTY( config, EditDefaultsOnly, Category = "UI" ) 
 	TSubclassOf< UUserWidget > mDefaultFocusWidgetClass;
-
 protected:
 	/** Should gamepad act as cursor when using this widget? */
 	UPROPERTY( EditDefaultsOnly, Category = "UI" )
@@ -164,4 +163,5 @@ protected:
 	/** Does this widget support stacking widgets on top? */
 	UPROPERTY( EditDefaultsOnly, Category = "Input" )
 	bool mSupportsStacking;
+
 };

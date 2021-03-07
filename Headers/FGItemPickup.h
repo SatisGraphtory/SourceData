@@ -5,14 +5,13 @@
 #include "FGSaveInterface.h"
 #include "FGInventoryComponent.h"
 #include "FGSignificanceInterface.h"
-#include "FGStaticReplicatedActor.h"
 #include "FGItemPickup.generated.h"
 
 /**
  * Use state when inventory of player looking at the item has a full inventory
  */
 UCLASS()
-class FACTORYGAME_API UFGUseState_FullInventory : public UFGUseState
+class UFGUseState_FullInventory : public UFGUseState
 {
 	GENERATED_BODY()
 
@@ -23,7 +22,7 @@ class FACTORYGAME_API UFGUseState_FullInventory : public UFGUseState
 * Use state when the item is being collected but takes time
 */
 UCLASS()
-class FACTORYGAME_API UFGUseState_Collecting : public UFGUseState
+class UFGUseState_Collecting : public UFGUseState
 {
 	GENERATED_BODY()
 
@@ -43,7 +42,7 @@ enum class EItemState :uint8
  * @todo: This looks like it should be a subclass of FGInteractActor
  */
 UCLASS(abstract)
-class FACTORYGAME_API AFGItemPickup : public AFGStaticReplicatedActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
+class AFGItemPickup : public AActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
 {
 	GENERATED_BODY()
 public:

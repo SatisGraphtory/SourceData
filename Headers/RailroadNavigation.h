@@ -19,7 +19,7 @@ enum class ERailroadPathFindingResult : uint8
 	RNQR_Success = 2		UMETA( DisplayName = "Success" )
 };
 
-struct FACTORYGAME_API FRailroadPathPoint
+struct FRailroadPathPoint
 {
 public:
 	FRailroadPathPoint();
@@ -35,7 +35,7 @@ public:
 /**
  * A navigation path used by the trains to get to a destination.
  */
-struct FACTORYGAME_API FRailroadPath
+struct FRailroadPath
 {
 	/** Path points to follow to the destination. */
 	TArray< FRailroadPathPoint > PathPoints;
@@ -47,7 +47,7 @@ typedef TWeakPtr< struct FRailroadPath > FRailroadPathWeakPtr;
 /**
  * A navigation result.
  */
-struct FACTORYGAME_API FRailroadPathFindingResult
+struct FRailroadPathFindingResult
 {
 public:
 	FRailroadPathFindingResult();
@@ -66,7 +66,7 @@ public:
 /**
  * A path point along a trains route.
  */
-struct FACTORYGAME_API FRailroadGraphAStarPathPoint
+struct FRailroadGraphAStarPathPoint
 {
 	/** Default constructor, epic passes INDEX_NONE when creating a "null" point. */
 	FRailroadGraphAStarPathPoint( int32 unused = INDEX_NONE );
@@ -103,7 +103,7 @@ public:
 /**
  * @see FGraphAStar
  */
-struct FACTORYGAME_API FRailroadGraphAStarHelper
+struct FRailroadGraphAStarHelper
 {
 	typedef FRailroadGraphAStarPathPoint FNodeRef;
 
@@ -120,7 +120,7 @@ struct FACTORYGAME_API FRailroadGraphAStarHelper
 /**
  * Evaluation filter for the pathfinding algorithm.
  */
-struct FACTORYGAME_API FRailroadGraphAStarFilter
+struct FRailroadGraphAStarFilter
 {
 	FRailroadGraphAStarFilter();
 
@@ -145,7 +145,7 @@ public:
 };
 
 /** Collection of navigation functions */
-struct FACTORYGAME_API FRailroadNavigation
+struct FRailroadNavigation
 {
 public:
 	/**
