@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -131,7 +131,7 @@ private:
 	TSoftObjectPtr< UStaticMesh > mContainerMeshLiquid;
 	
 	/** The size of the inventory for this wagon. */
-	UPROPERTY( EditDefaultsOnly, Category = "Inventory" )
+	UPROPERTY( EditDefaultsOnly, Category = "Inventory", meta = ( AddAutoJSON = true ) )
 	int32 mInventorySize;
 
 	/** Item stack size Enum to use as base for how much fluid a Liquid / Gas Item descriptor can be stored on an index in an inventory */
