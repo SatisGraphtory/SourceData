@@ -236,7 +236,7 @@ private:
 
 	/* Check and resizes the texture buffers and intermediate data buffers that are used.
 	 * When an resize occured it also updates all instance components and material instances. */
-	void Resize();
+	bool Resize();
 
 	void UpdateInstanceBounds( const TArray<bool> DistancesToUpdate );
 
@@ -310,6 +310,8 @@ private:
 	TArray< uint8 > mNearPositionBufferData;
 	TArray< uint8 > mNearOrientationBufferData;
 
+	FRenderCommandFence RenderFence;
+	
 	bool mIsDisabled;
 
 	// Settings

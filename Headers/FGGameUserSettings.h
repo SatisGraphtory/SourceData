@@ -40,7 +40,7 @@ public:
 };
 
 UCLASS(BlueprintType)
-class UFGGameUserSettings : public UGameUserSettings
+class FACTORYGAME_API UFGGameUserSettings : public UGameUserSettings
 {
 	GENERATED_BODY()
 public:
@@ -112,14 +112,6 @@ public:
 	/** Returns the default quality setting value */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Settings" )
 	int32 GetDefaultPostProcessQualitySetting( FString settingName );
-
-	/** Sets the user setting for network quality */
-	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Settings" )
-    void SetFPSCap( int32 newFPSCap );
-
-	/** Returns the user setting for FPS Cap */
-	UFUNCTION( BlueprintPure, Category = "FactoryGame|Settings" )
-    FORCEINLINE int32 GetFPSCap() const { return mFPSCap;  }
 
 	/** Update network values in config files */
 	void RefreshNetworkQualityValues();
@@ -296,10 +288,6 @@ protected:
 	/** Sets Field of View */
 	UPROPERTY( Config )
 	int32 mFOV;
-
-	/** FPS settings */
-	UPROPERTY( Config )
-	int32 mFPSCap;
 
 	/** Motion blur quality. 0 = off */
 	UPROPERTY( Config )
