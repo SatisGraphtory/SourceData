@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Templates/TypeHash.h"
@@ -48,6 +50,13 @@ struct FObjectReferenceDisc
 	* @param outer - returns the outer object for this object if found
 	*/
 	bool ResolveWithRedirect( UWorld* world, const FString& outerName, UObject*& out_object, UObject*& out_outer ) const;
+
+	/**
+	* Find or Load a class. This is a (hopefully) temporary duct-tape fix for Mod Loading. We want to use StaticFindObject as its quicker
+	* and our objects will always be loaded. However modders have the issue of it being difficult to find the timing of when their objects are loaded
+	* By switching depending on if the SML is loaded we can only run the Load logic if the mod loader is mounted
+	*/
+	static UObject* StaticFindOrLoad( UClass* ObjectClass, UObject* InObjectPackage, const TCHAR* OrigInName, bool isProbablyClass = false );
 
 	template<typename T>
 	T* Resolve( UWorld* world ) const
@@ -104,13 +113,16 @@ struct FObjectReferenceDisc
 	/** For comparisons of references */
 	FORCEINLINE bool operator ==( const FObjectReferenceDisc& other ) const { return LevelName == other.LevelName && PathName == other.PathName; }
 
-private:
-	friend UObject* InternalResolve( const FObjectReferenceDisc& reference, UWorld* world, UObject* searchOuter, UObject* outer );
-
 	/**
 	 * Add a redirector from a object name to a new object name
 	 */
 	static void AddRedirector( const FString& source, const FString& destination );
+
+public:
+	static bool IsModdingModuleLoaded;
+
+private:
+	friend UObject* InternalResolve( const FObjectReferenceDisc& reference, UWorld* world, UObject* searchOuter, UObject* outer );
 
 	/**
 	 * Redirects done during this latest session

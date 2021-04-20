@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -34,7 +34,6 @@ struct FDestroyedFoliageEffectData
 	int32 Priority;
 };
 
-
 /**
  *  Base class for any projectile that should destroy foliage or actors
  *	@todo: Optimize to collect overlapped foliage if attached to a static actor so that we don't need to populate on detonate
@@ -43,7 +42,6 @@ UCLASS()
 class FACTORYGAME_API AFGDestructiveProjectile : public AFGProjectile
 {
 	GENERATED_BODY()
-
 public:
 	AFGDestructiveProjectile();
 

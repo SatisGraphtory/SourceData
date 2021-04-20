@@ -1,4 +1,4 @@
-// Copyright 2016-2020 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -113,7 +113,10 @@ public:
 	 * @return - true if connected; otherwise false. Always false if attached to hologram, snap only or bad index configuration.
 	 */
 	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Factory|FactoryConnection" )
-	bool IsConnected() const;
+	FORCEINLINE bool IsConnected() const
+	{
+		return mHasConnectedComponent;
+	}
 
 	/** Return the inventory associated with this connection. */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|FactoryConnection" )

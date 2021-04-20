@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
@@ -12,7 +14,7 @@ enum class EGameVersion : uint8
 };
 
 UCLASS()
-class UFGVersionFunctionLibrary : public UBlueprintFunctionLibrary
+class FACTORYGAME_API UFGVersionFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

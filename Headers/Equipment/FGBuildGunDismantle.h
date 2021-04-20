@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -9,21 +9,15 @@
 static const int MAX_DISMANTLE_LIMIT = 50;
 
 USTRUCT()
-struct FDismantleRefunds
+struct FACTORYGAME_API FDismantleRefunds
 {
 	GENERATED_BODY()
-
-	/** Ctor */
-	FDismantleRefunds()
-	{
-		NumPendingActors = 0;
-	}
+public:
+	UPROPERTY()
+	uint32 NumPendingActors = 0;
 
 	UPROPERTY()
-	uint32 NumPendingActors;
-
-	UPROPERTY()
-	TArray<FInventoryStack> PeekDismantleRefund;
+	TArray< FInventoryStack > PeekDismantleRefund;
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnDismantleRefundsChanged, class UFGBuildGunStateDismantle*, dismantleGun );
@@ -38,7 +32,6 @@ UCLASS()
 class FACTORYGAME_API UFGBuildGunStateDismantle : public UFGBuildGunState
 {
 	GENERATED_BODY()
-
 public:
 	UFGBuildGunStateDismantle();
 
@@ -111,6 +104,11 @@ public:
 	UPROPERTY( BlueprintAssignable, Category = "BuildGunState|Dismantle" )
 	FOnMultiDismantleStateChanged OnMultiDismantleStateChanged;
 
+	/** Material used on stencil proxies, needed to overwrite decal material domain shaders.
+	 * otherwise the depth is incorrect in the stencil buffer. */
+	UPROPERTY( EditDefaultsOnly )
+	UMaterialInterface* mHoverProxyMaterial;
+	
 protected:
 	void Internal_OnMultiDismantleStateChanged(bool newValue);
 
@@ -146,6 +144,15 @@ private:
 	/** Validates the list of pending dismantle actors and removes any stale pointers */
 	void ClearStaleDismantleActors();
 
+	/** Adds instances to the proxy component( s ) */
+	void CreateStencilProxy( AActor* selected );
+
+	void DestroySingleStencilProxy( AActor* actor );
+	
+	void DestroyStencilProxies(bool destroyComponents = true);
+
+	/** Reset stencil value on every mesh component that has a render state. */
+	void ResetStencilValues( TArray<AActor*> selectedActors );
 private:
 	/** State bool for whether multi-select is in effect */
 	bool mIsMultiSelectActive;
@@ -160,6 +167,10 @@ private:
 	/** The actor to dismantle (simulated locally on client). */
 	UPROPERTY(Transient)
 	TArray<class AActor*> mPendingDismantleActors;
+
+	/** Stencil meshes to mark dismantle with */
+	UPROPERTY(Transient)
+	TMap< UStaticMesh*, UInstancedStaticMeshComponent*> mPendingDismantleStencilMeshes;
 	
 	/** Cached dismantle refunds on server that is replicated */
 	UPROPERTY(Transient, ReplicatedUsing = OnRep_PeekDismantleRefund )

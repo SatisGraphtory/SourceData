@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -25,6 +25,7 @@ public:
 
 	// Begin IFGReplicationDetailActorOwnerInterface
 	virtual UClass* GetReplicationDetailActorClass() const override { return AFGReplicationDetailActor_DockingStation::StaticClass(); };
+	virtual void OnReplicationDetailActorRemoved() override;
 	// End IFGReplicationDetailActorOwnerInterface
 
 	/** @return a valid pointer to the fuel inventory */
@@ -107,13 +108,6 @@ protected:
 	UFUNCTION()
 	bool FilterFuelClasses( TSubclassOf< UObject > object, int32 idx ) const;
 private:
-	/**
-	 * @todo: Move to InventoryComponent, make const
-	 * Returns the first slot index that has any items on it
-	 * If nothing exists in inventory -1 is returned
-	 */
-	int32 GetFirstIndexWithItem( UFGInventoryComponent* inventory );
-
 
 	/** Loads fuel into the docked vehicles inventory.
 	 * @return true if we are done refueling (i.e. vehicle fuel inventory is full or we have no fuel to transfer)
@@ -193,6 +187,6 @@ private:
 	class UFGInventoryComponent* mInventory;
 
 	/** Inventory for refueling the trucks. */
-	UPROPERTY( SaveGame, ReplicatedUsing = OnRep_FuelInventory )
+	UPROPERTY( SaveGame )
 	class UFGInventoryComponent* mFuelInventory;
 };

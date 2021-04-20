@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -39,6 +39,7 @@ public:
 
 	// Begin IFGReplicationDetailActorOwnerInterface
 	virtual UClass* GetReplicationDetailActorClass() const override { return AFGReplicationDetailActor_Manufacturing::StaticClass(); };
+	virtual void OnReplicationDetailActorRemoved() override;
 	// End IFGReplicationDetailActorOwnerInterface
 
 	/**
@@ -111,7 +112,7 @@ protected:
 
 	/** Called when NewRecipe is replicated */
 	UFUNCTION()
-	void OnRep_CurrentRecipe();
+	virtual void OnRep_CurrentRecipe();
 
 	virtual void OnRep_ReplicationDetailActor() override;
 

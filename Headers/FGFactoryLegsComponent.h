@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Components/SceneComponent.h"
@@ -5,6 +7,9 @@
 #include "DefaultValueHelper.h"
 #include "FGFactoryLegsComponent.generated.h"
 
+/**
+ * Information about one leg on a factory.
+ */
 USTRUCT()
 struct FFeetOffset
 {
@@ -17,7 +22,24 @@ public:
 
 	FName GetSocket() const;
 public:
-	/** The name of the foot's socket. */
+	bool NetSerialize( FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess )
+	{
+		Ar << FeetIndex;
+		
+		bOutSuccess = true;
+		if( Ar.IsSaving() )
+		{
+			bOutSuccess = WriteFixedCompressedFloat<16384, 16>( OffsetZ, Ar );
+		}
+		else
+		{
+			bOutSuccess = ReadFixedCompressedFloat<16384, 16>( OffsetZ, Ar );
+		}
+
+		return bOutSuccess;
+	}
+
+	/** The index from the foot's socket name, i.e. foot_04 would be 4. */
 	UPROPERTY( SaveGame )
 	uint8 FeetIndex;
 
@@ -30,8 +52,24 @@ public:
 	bool IsValidOffset;
 };
 
+template<>
+struct TStructOpsTypeTraits<FFeetOffset> : public TStructOpsTypeTraitsBase2<FFeetOffset>
+{
+	enum
+	{
+		WithNetSerializer = true,
+	};
+};
+
+/**
+ * Class that manages the legs on a factory.
+ * This component does:
+ *   Trace for foot offsets for each leg.
+ *   Save the offsets in the save game.
+ *   Auto-create the legs on register and remove them on unregister.
+ */
 UCLASS( ClassGroup = ( Custom ), meta = ( BlueprintSpawnableComponent ) )
-class UFGFactoryLegsComponent : public USceneComponent, public IFGSaveInterface
+class FACTORYGAME_API UFGFactoryLegsComponent : public USceneComponent, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:
@@ -116,6 +154,10 @@ protected:
 	/** The maximum length the legs can be. */
 	UPROPERTY( EditDefaultsOnly, Category = "Legs" )
 	float mMaxLegLengthOverride;
+
+	/** Minimum trace length that the buildable should make before spawning legs, -1 means always spawn*/
+	UPROPERTY( EditDefaultsOnly, Category = "Legs" )
+	float mMinimumLegLength;
 
 private:
 	/** The created leg components for this building */

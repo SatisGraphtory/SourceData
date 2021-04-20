@@ -1,4 +1,4 @@
-// Copyright 2016-2020 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -22,7 +22,7 @@ enum class EEvents : uint8
 };
 
 USTRUCT( BlueprintType )
-struct FSimpleDate
+struct FACTORYGAME_API FSimpleDate
 {
 	GENERATED_BODY()	
 	/* Does it begin in current year, but end in next? this should be on 1.*/
@@ -49,7 +49,7 @@ struct FSimpleDate
 };
 
 USTRUCT( BlueprintType )
-struct FFGEventData
+struct FACTORYGAME_API FFGEventData
 {
 	GENERATED_BODY()
 	
@@ -67,11 +67,10 @@ struct FFGEventData
 };
 
 USTRUCT()
-struct FCalendarData
+struct FACTORYGAME_API FCalendarData
 {
 	GENERATED_BODY()
 public:
-	
 	UPROPERTY( SaveGame )
 	TArray< FInventoryStack > InventoryStacks;
 
@@ -85,18 +84,15 @@ public:
 };
 
 /**
- * 
+ * @todo Please comment me
  */
 UCLASS( Blueprintable )
 class FACTORYGAME_API AFGEventSubsystem : public AFGSubsystem, public IFGSaveInterface
 {
 	GENERATED_BODY()
-	
+public:	
 	AFGEventSubsystem();
 
-	
-public:
-	
 	//~ Begin AActor interface
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
 	//~ End AActor interface
@@ -120,6 +116,7 @@ public:
 
 	bool ShouldRunEvent( const FSimpleDate& Begin, const FSimpleDate& End, const FDateTime& now );
 	
+public:
 	UPROPERTY( Replicated )
 	TArray< EEvents > mCurrentEvents;
 	
@@ -135,21 +132,18 @@ private:
 	TMap< EEvents, FCalendarData > mStoredCalendarData;
 };
 
-
 UCLASS( config = EditorPerProjectUserSettings, meta = ( DisplayName = "Satisfactory Local Event settings" ) )
 class FACTORYGAME_API UFGEventDeveloperSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
-
-private:
+public:
 	UPROPERTY( EditDefaultsOnly, Config )
 	bool mDisableEvents;
 	
 	UPROPERTY( EditDefaultsOnly, Config )
 	EEvents mOverwrittenEvent;
-
-public:
 	
+public:
 	static bool ShouldOverwriteEvent()
 	{
 		return !GetDefault< UFGEventDeveloperSettings >()->mDisableEvents && GetDefault< UFGEventDeveloperSettings >()->mOverwrittenEvent != EEvents::EV_None ;

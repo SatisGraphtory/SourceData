@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGDropPodSettings.h"
@@ -10,7 +12,7 @@
 
 
 UCLASS()
-class AFGDropPod : public AActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
+class FACTORYGAME_API AFGDropPod : public AActor, public IFGUseableInterface, public IFGSaveInterface, public IFGSignificanceInterface
 {
 	GENERATED_BODY()
 public:
@@ -18,10 +20,8 @@ public:
 
 	// Begin AActor interface
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
-	virtual void PostLoad() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay( const EEndPlayReason::Type endPlayReason ) override;
-	virtual void Tick( float DeltaSeconds ) override;
 	// End AActor interface
 
 	//Begin IFGSignificanceInterface
@@ -102,7 +102,6 @@ protected:
 	UPROPERTY( EditDefaultsOnly, Category = "Drop Pod" )
 	int32 mAmountOfInventorySlots;
 
-	
 protected:
 	UPROPERTY( Replicated, BlueprintReadOnly )
 	class UFGPowerInfoComponent* mPowerInfo;
@@ -111,10 +110,10 @@ protected:
 	bool mHasPower;
 
 private:
+	void OnHasPowerChanged( class UFGPowerInfoComponent* info );
+	
 	UFUNCTION()
 	void OnRep_HasBeenOpened();
-
-	void OnPowerConnectionChanged( class UFGCircuitConnectionComponent* connection );
 
 private:
 	/** True when this has been opened */

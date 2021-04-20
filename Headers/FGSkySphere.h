@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/Actor.h"
@@ -52,11 +54,10 @@ struct FSkySphereSettings
 };
 
 UCLASS(HideCategories=(Input,Rendering))
-class AFGSkySphere : public AActor, public ICurvePanningInterface
+class FACTORYGAME_API AFGSkySphere : public AActor, public ICurvePanningInterface
 {
 	GENERATED_BODY()
 public:
-	/** ctor */
 	AFGSkySphere();
 
 	// Begin AActor interface

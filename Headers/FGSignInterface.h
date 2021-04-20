@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -320,7 +320,7 @@ struct TStructOpsTypeTraits< FSignData > : public TStructOpsTypeTraitsBase2< FSi
 
 
 // Sign Interface
-UINTERFACE( MinimalAPI, Blueprintable )
+UINTERFACE( Blueprintable )
 class UFGSignInterface : public UInterface
 {
 	GENERATED_BODY()

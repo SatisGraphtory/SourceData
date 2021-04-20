@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -9,10 +9,11 @@
 #include "FGTutorialIntroManager.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE( FIntroSequenceStateUpdate );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE( FCurrentIntroStepUpdate );
 
 //Steps in the intro tutorial
 UENUM( BlueprintType )
-enum class EIntroTutorialSteps :uint8
+enum class EIntroTutorialSteps : uint8
 {
 	ITS_NONE			UMETA( DisplayName = "No tutorial" ),
 	ITS_INTRO			UMETA( DisplayName = "Intro state with message" ),
@@ -60,18 +61,6 @@ struct FTutorialHintData
 
 	UPROPERTY( EditDefaultsOnly, BlueprintReadOnly, Category = "Tutorial" )
 	TSubclassOf< class UFGMessageBase > Message;
-};
-
-struct FFindByIntroID
-{
-	EIntroTutorialSteps TutorialStep;
-
-	FFindByIntroID( EIntroTutorialSteps InTutorialStep ) : TutorialStep( InTutorialStep ) { }
-
-	bool operator() ( const FTutorialHintData Element ) const
-	{
-		return ( TutorialStep == Element.ID );
-	}
 };
 
 UCLASS( abstract )
@@ -222,6 +211,10 @@ public:
 	/** Called when mHasCompletedIntroSequence updates */
 	UPROPERTY(BlueprintAssignable,Category="Tutorial")
 	FIntroSequenceStateUpdate mOnIntroSequenceStateUpdated;
+
+	/** Called when mCurrentLocalTutorial updates */
+	UPROPERTY(BlueprintAssignable,Category="Tutorial")
+	FCurrentIntroStepUpdate mOnCurrentIntroStepUpdated;
 
 protected:
 	/** Has a trading post been built */

@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "UndefinedBool.h"
@@ -6,7 +8,7 @@
 #include "FGAmbientVolume.generated.h"
  
 UCLASS(HideCategories=(Cooking,Mobile))
-class AFGAmbientVolume : public AVolume, public IFGSignificanceInterface
+class FACTORYGAME_API AFGAmbientVolume : public AVolume, public IFGSignificanceInterface
 {
 	GENERATED_BODY()
 public:

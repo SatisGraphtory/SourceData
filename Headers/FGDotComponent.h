@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Components/SceneComponent.h"
@@ -8,11 +10,10 @@
  * shape, then we apply the specified dot to the actors specified in the UFGDamageOverTime class
  */
 UCLASS( hidecategories = ( Cooking, Collision, Rendering, Sockets ), ClassGroup = ( Custom ), meta = ( BlueprintSpawnableComponent, DisplayName = "DotComponent" ) )
-class UFGDotComponent : public USceneComponent
+class FACTORYGAME_API UFGDotComponent : public USceneComponent
 {
 	GENERATED_BODY()
 public:
-	/** ctor */
 	UFGDotComponent();
 
 	//~ Begin UObject interface
@@ -44,9 +45,14 @@ protected:
 	/** Called by timer to tell us to damage the containing actors */
 	UFUNCTION()
 	void DamageContainingActors();
+
+private:
+	void AddActorToDamage( AActor* actor );
+	void RemoveActorToDamage( AActor* actor );
+	
 protected:
 	/** The dot we should apply to things in the primitive component we are attached to */
-	UPROPERTY( EditAnywhere, Category="Dot")
+	UPROPERTY( EditAnywhere, Category = "Dot" )
 	TSubclassOf< class UFGDamageOverTime > mDotClass;
 
 	/** The actors we want to damage */

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -25,7 +25,7 @@ enum class EFGSignificanceType : uint8
 };
 
 USTRUCT() 
-struct FGainSignificanceData
+struct FACTORYGAME_API FGainSignificanceData
 {
 	GENERATED_BODY()
 	EFGSignificanceType SignificanceType; 

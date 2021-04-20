@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -9,20 +9,19 @@
 #include "FGBaseUI.generated.h"
 
 /**
- * 
+ * @todo Please comment me
  */
 UCLASS()
 class FACTORYGAME_API UFGBaseUI : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	/** ctor */
 	UFGBaseUI( const FObjectInitializer& ObjectInitializer );
 
-	virtual void NativeConstruct();
-
-	/** Tick tock */
-	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime );
+	// Begin UUserWidget interface
+	virtual void NativeConstruct() override;
+	virtual void NativeTick( const FGeometry& MyGeometry, float InDeltaTime ) override;
+	// End UUserWidget interface
 
 	/** Creates a popup */
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "UI" )

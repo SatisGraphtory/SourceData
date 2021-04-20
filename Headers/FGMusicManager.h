@@ -1,24 +1,32 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/Actor.h"
 #include "FGMusicManager.generated.h"
 
+/**
+ * Handles playing the music in game, this is created really early and is available across loading screens.
+ */
 UCLASS(Blueprintable,Config=Engine)
-class UFGMusicManager : public UObject
+class FACTORYGAME_API UFGMusicManager : public UObject
 {
 	GENERATED_BODY()
 public:
 	/** Create a music manager from the specified class in a config */
 	static class UFGMusicManager* CreateMusicManager( class UFGGameInstance* gameInstance );
 
+	/** Get the music manager, can return null if world context is invalid or no music manager is spawned. */
 	static UFGMusicManager* Get( UWorld* world );
-
-	/** To easy access the music manager from anywhere, can return null if world context is invalid or no music manager is spawned. */
+	/** Get the music manager, can return null if world context is invalid or no music manager is spawned. */
 	UFUNCTION( BlueprintPure, Category = "Music", DisplayName = "GetMusicManager", Meta = ( DefaultToSelf = "worldContext" ) )
 	static UFGMusicManager* Get( UObject* worldContext );
 
+	// Begin UObject interface
 	virtual UWorld* GetWorld() const override;
+	// End UObject interface
 
+	/** Let us know when a player controller enters play. */
 	void OnPlayerControllerBeginPlay( class AFGPlayerControllerBase* pc );
 
 	/** Start/Continue music playback. */
@@ -33,19 +41,28 @@ public:
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, Category = "Audio" )
 	void Stop();
 
+	/** Called when combat status has changed */
+	UFUNCTION( BlueprintImplementableEvent, Category = "Audio" )
+	void OnCombatStatusChanged( bool inCombat );
+
+	/** Called from the local character when attacker register/unregisters */
+	void UpdateIncomingAttackers( int32 numAttackers );
+
+	/** Checks combat status */
+	UFUNCTION( BlueprintPure, Category = "Audio" )
+	FORCEINLINE bool IsInCombat() { return mIsInCombat; }
 protected:
-	/** Notify that a new map has been loaded. */
-	UFUNCTION( BlueprintImplementableEvent, Category = "Audio", DisplayName = "OnPostLoadMap" )
-	void NotifyPostLoadMap( UWorld* loadedWorld, class AWorldSettings* worldSettings );
+	/** Notify that music manager has been created */
+	UFUNCTION( BlueprintImplementableEvent, Category = "Audio", DisplayName = "OnInit" )
+	void NotifyInit( UWorld* loadedWorld, class AWorldSettings* worldSettings );
 
 	/** Called whenever a player enters an area */
-	UFUNCTION( BlueprintImplementableEvent, Category = "Audio" )
-	void OnPlayerEnteredArea( TSubclassOf< class UFGMapArea > mapArea );
+	UFUNCTION( BlueprintNativeEvent, Category = "Audio" )
+	void OnPlayerEnteredArea(AFGPlayerControllerBase* playerController, TSubclassOf< class UFGMapArea > mapArea );
 
 	/** Called whenever a player enters*/
 	UFUNCTION( BlueprintImplementableEvent, Category = "Audio" )
 	void OnPlayerNearBaseChanged( bool isNear );
-
 private:
 	UFGMusicManager();
 
@@ -53,7 +70,7 @@ private:
 	void Update();
 
 	/** Called when a new level has been loaded. */
-	void OnPostLoadMap( UWorld* loadedWorld );
+	void Init( UWorld* inWorld );
 
 protected:
 	/** How often (in seconds) we want to check if we are close to a factory */
@@ -68,6 +85,9 @@ protected:
 	UPROPERTY( BlueprintReadOnly, Transient )
 	class UAkObject* mAkObject;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool mHasPlayerAlreadyVisitedArea = false;
+
 private:
 	/** Music manager class name */
 	UPROPERTY( GlobalConfig )
@@ -78,4 +98,10 @@ private:
 
 	/** If the player is in his factory. */
 	uint8 mIsPlayerNearBase : 1;
+
+	/** If the player is in combat mode. */
+	uint8 mIsInCombat : 1;
+
+	/** Saved value of how many attackers the local player has currently */
+	int32 mCachedNumAttackers;
 };

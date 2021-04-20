@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ enum class ECycleDirection : uint8
 };
 
 USTRUCT( BlueprintType )
-struct FScannableDetails
+struct FACTORYGAME_API FScannableDetails
 {
 	GENERATED_BODY()
 
@@ -230,7 +230,7 @@ private:
 
 
 UCLASS()
-class AFGObjectScannerAttachment : public AFGEquipmentAttachment
+class FACTORYGAME_API AFGObjectScannerAttachment : public AFGEquipmentAttachment
 {
 	GENERATED_BODY()
 

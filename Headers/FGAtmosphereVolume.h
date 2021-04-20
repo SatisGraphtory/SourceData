@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Interfaces/Interface_PostProcessVolume.h"
@@ -5,6 +7,7 @@
 #include "Curves/CurveLinearColor.h"
 #include "FGSkySphere.h"
 #include "FGAtmosphereVolume.generated.h"
+
 
 USTRUCT()
 struct FExponentialFogSettings
@@ -98,7 +101,7 @@ struct FExponentialFogSettings
 
 
 UCLASS(HideCategories=(Collision,Tags,Cooking,Actor,Mobile))
-class AFGAtmosphereVolume : public AVolume, public ICurvePanningInterface, public IInterface_PostProcessVolume
+class FACTORYGAME_API AFGAtmosphereVolume : public AVolume, public ICurvePanningInterface, public IInterface_PostProcessVolume
 {
 	GENERATED_BODY()
 public:

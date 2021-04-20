@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@
  * Defines a pole height.
  */
 USTRUCT( BlueprintType )
-struct FPoleHeightMesh
+struct FACTORYGAME_API FPoleHeightMesh
 {
 	GENERATED_BODY()
 public:

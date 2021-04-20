@@ -1,10 +1,12 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/Actor.h"
 #include "FGPlanet.generated.h"
 
 UCLASS()
-class AFGPlanet : public AActor
+class FACTORYGAME_API AFGPlanet : public AActor
 {
 	GENERATED_BODY()
 public:
@@ -15,6 +17,7 @@ public:
 #if WITH_EDITOR
 	virtual void PostEditChangeChainProperty( struct FPropertyChangedChainEvent& propertyChangedEvent ) override;
 #endif
+	// End AActor interface
 
 	/** Update the preview of the planet in the editor */	
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable, meta = ( CallInEditor = "true" ) )

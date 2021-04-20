@@ -1,10 +1,12 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGItemPickup.h"
 #include "FGItemPickup_Spawnable.generated.h"
 
 UCLASS( NotPlaceable )
-class AFGItemPickup_Spawnable : public AFGItemPickup
+class FACTORYGAME_API AFGItemPickup_Spawnable : public AFGItemPickup
 {
 	GENERATED_BODY()
 public:

@@ -1,15 +1,17 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/Actor.h"
 #include "FGItemDescriptor.h"
 #include "FGRenderTargetStage.generated.h"
 
+//@todo-cleanup Part of an old system not used for years, should be cleaned out probably.
 UCLASS(HideCategories=(Input,Actor))
 class AFGRenderTargetStage : public AActor
 {
 	GENERATED_BODY()
 public:
-	// Ctor
 	AFGRenderTargetStage();
 
 	//~ Begin AActor interface

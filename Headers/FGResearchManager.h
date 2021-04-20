@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -28,7 +28,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FResearchTreeUnlocked, TSubclassOf<
 * Contains data about the research conducted
 */
 USTRUCT()
-struct FResearchData
+struct FACTORYGAME_API FResearchData
 {
 	GENERATED_BODY()
 
@@ -65,7 +65,7 @@ FORCEINLINE bool IsValidForLoad( const FResearchData& element );
 * Keeps track of ongoing research and when it's supposed to be completed.
 */
 USTRUCT()
-struct FResearchTime
+struct FACTORYGAME_API FResearchTime
 {
 	GENERATED_BODY()
 
@@ -232,8 +232,8 @@ protected:
 	UFUNCTION()
 	void OnRep_OngoingResearch();
 
-	UFUNCTION( Reliable, Client )
-	void Client_NewResearchStarted( TSubclassOf< class UFGSchematic > research );
+	UFUNCTION( Reliable, NetMulticast )
+	void Multicast_ResearchCompleted( TSubclassOf< class UFGSchematic > research );
 
 	/** Populates list with all available research trees in the game */
 	void PopulateResearchTreeList();

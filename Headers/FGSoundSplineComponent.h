@@ -1,8 +1,11 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "AkComponent.h"
 #include "FGSoundSplineComponent.generated.h"
 
+//@todo-cleanup Is this still in use? Move to Ak maybe?
 UCLASS(meta=(BlueprintSpawnableComponent))
 class UFGSoundSplineComponent : public UAkComponent
 {

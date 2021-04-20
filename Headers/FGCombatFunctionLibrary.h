@@ -1,10 +1,12 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGCombatFunctionLibrary.generated.h"
 
 
 UCLASS()
-class UFGCombatFunctionLibrary : public UBlueprintFunctionLibrary
+class FACTORYGAME_API UFGCombatFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

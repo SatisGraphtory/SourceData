@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGEquipmentDescriptor.h"
@@ -7,7 +9,7 @@
  * Item descriptor for consumable items.
  */
 UCLASS()
-class UFGConsumableDescriptor : public UFGEquipmentDescriptor
+class FACTORYGAME_API UFGConsumableDescriptor : public UFGEquipmentDescriptor
 {
 	GENERATED_BODY()
 public:

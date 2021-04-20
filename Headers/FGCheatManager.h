@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -17,7 +17,7 @@ public:
 
 	// Begin UObject interface
 	virtual bool IsSupportedForNetworking() const override;
-	virtual int32 GetFunctionCallspace( UFunction* Function, void* Parameters, FFrame* Stack ) override;
+	virtual int32 GetFunctionCallspace( UFunction* Function, FFrame* Stack ) override;
 	virtual bool CallRemoteFunction( UFunction* Function, void* Parameters, FOutParmRec* OutParms, FFrame* Stack ) override;
 	// End UObject interface
 
@@ -79,13 +79,16 @@ public:
 	virtual void ClearGiveItemPopularList();
 	
 	UFUNCTION( exec, CheatBoard, category = "Research" )
-	virtual void GiveALLSchematics();
+	virtual void GiveAllSchematics();
 
 	UFUNCTION( exec, CheatBoard, category = "Research" )
 	void GiveAllSchematicsAndPhases();
 
 	UFUNCTION( exec, CheatBoard, category = "Research" )
 	virtual void GiveAvailableSchematics();
+
+	UFUNCTION( exec, CheatBoard, category = "Research" )
+	virtual void GiveActiveMilestoneSchematic();
 
 	UFUNCTION( exec, CheatBoard, category = "Research" )
 	virtual void GiveCheatSchematics();
@@ -101,6 +104,21 @@ public:
 
 	UFUNCTION( exec, CheatBoard, category = "Research" )
 	void GiveAllResearchTrees();
+
+	UFUNCTION( exec, CheatBoard, category = "Story" )
+	void TriggerNextStoryMessageInQueue();
+
+	UFUNCTION( exec, CheatBoard, category = "Story" )
+	void TriggerNextBarkMessageInQueue();
+
+	UFUNCTION( exec, CheatBoard, category = "Story" )
+	void StartNextStoryQueue();
+
+	UFUNCTION( exec, CheatBoard, category = "Story" )
+	void ResetAllStoryQueues();
+
+	UFUNCTION( exec, CheatBoard, category = "Story" )
+	void ResetCurrentStoryQueue();
 	
 	UFUNCTION( exec, CheatBoard, category = "Factory|Uncommon" )
 	virtual void RebuildPowerCircuits();
@@ -132,6 +150,9 @@ public:
 
 	UFUNCTION( exec, CheatBoard, category = "World/Time" )
 	void SetTimeOfDay( int32 hour, int32 minute = 0 );
+
+	UFUNCTION( exec, CheatBoard, category = "World/Time" )
+    void SetTimeSpeedMultiplierResetTime( int32 resetHour );
 
 	UFUNCTION( exec, CheatBoard, category = "World/Time" )
 	int32 SetTimeOfDay_hour_Get();
@@ -200,6 +221,9 @@ public:
 
 	UFUNCTION( exec, CheatBoard, category = "Research" )
 	void SetGamePhase( EGamePhase phase );
+	
+	UFUNCTION( exec, CheatBoard, category = "Research" )
+	void SetNextGamePhase();
 
 	UFUNCTION( exec )
 	void TestSharedInventoryPtr();
@@ -262,9 +286,6 @@ public:
 
 	UFUNCTION( exec, CheatBoard, category = "Log" )
 	void DumpSignificanceManagedObjects();
-
-	UFUNCTION( exec, CheatBoard, category = "Log" )
-	void DumpDynamicOptionsSettings();
 
 	UFUNCTION( exec, CheatBoard, category = "Save/Load" )
 	void PurgeInactiveClientsFromSave( bool fetchInventories );
@@ -422,9 +443,6 @@ public:
 	UFUNCTION( exec )
     void PipeTweakFluidViscosity( float fluidViscosity );
 
-	UFUNCTION( exec )
-    void PipeTweakSubStepping( float targetDeltaSeconds, int32 maxSubSteps );
-
 	/** Duplicate a component within a circuit so it contains multiple entries for the same component. */
 	UFUNCTION( exec )
 	void DupeComponentInCircuit( int32 target );
@@ -434,6 +452,14 @@ public:
 
 	UFUNCTION( exec )
 	void DumpConnectionString();
+
+	UFUNCTION( exec )
+	void FillAllFreightCars( float pct = 1.f );
+	UFUNCTION( exec )
+    void EmptyAllFreightCars();
+
+	UFUNCTION( exec )
+	void DumpCircuitsToLog();
 
 private:
 	class UActorComponent* GetOuterPlayersUseComponent() const;

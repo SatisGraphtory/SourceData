@@ -1,15 +1,17 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/Actor.h"
 #include "FGUseableInterface.h"
+#include "FGStaticReplicatedActor.h"
 #include "FGInteractActor.generated.h"
 
 UCLASS( abstract )
-class AFGInteractActor : public AActor, public IFGUseableInterface
+class FACTORYGAME_API AFGInteractActor : public AFGStaticReplicatedActor, public IFGUseableInterface
 {
 	GENERATED_BODY()
 public:
-	/** ctor */
 	AFGInteractActor();
 
 	/** Called when player interacts with this actor	*/

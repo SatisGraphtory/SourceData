@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -65,7 +65,7 @@ public:
 	
 	/** Returns the number of points left until you receive the next coupon */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|ResourceSink" )
-	int32 GetNumPointsToNextCoupon() const;
+	int64 GetNumPointsToNextCoupon() const;
 	
 	/** Returns the percentage (normalized value) of your progression towards the next coupon */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|ResourceSink" )

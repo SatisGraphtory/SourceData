@@ -1,10 +1,12 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGSubsystem.h"
 #include "FGAudioVolumeSubsystem.generated.h"
 
 UCLASS(NotPlaceable)
-class AFGAudioVolumeSubsystem : public AFGSubsystem
+class FACTORYGAME_API AFGAudioVolumeSubsystem : public AFGSubsystem
 {
 	GENERATED_BODY()
 public:

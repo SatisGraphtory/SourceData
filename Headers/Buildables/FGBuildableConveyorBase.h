@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -18,7 +18,7 @@ enum { FG_CONVEYOR_REP_KEY_NONE = 0 };
 *A class used for clients to be able to call the server through the local player character.
 */
 UCLASS()
-class UFGConveyorRemoteCallObject : public UFGRemoteCallObject
+class FACTORYGAME_API UFGConveyorRemoteCallObject : public UFGRemoteCallObject
 {
 	GENERATED_BODY()
 	public:
@@ -43,7 +43,7 @@ class UFGConveyorRemoteCallObject : public UFGRemoteCallObject
 * Holds data for an item traveling on the conveyor.
 */
 USTRUCT()
-struct FConveyorBeltItem
+struct FACTORYGAME_API FConveyorBeltItem
 {
 	GENERATED_BODY()
 public:
@@ -412,12 +412,12 @@ struct FConveyorBeltItems
 	friend FArchive& operator<<( FArchive& ar, FConveyorBeltItems& items );
 
 
-	void SetOwner( class AFGBuildableConveyorBase* _owner )
+	FORCEINLINE void SetOwner( class AFGBuildableConveyorBase* _owner )
 	{
 		Owner = _owner;
 	}
 
-	int16 GetCombinedDirtyKey()
+	FORCEINLINE int16 GetCombinedDirtyKey()
 	{
 		return ArrayReplicationKey + ArrayReplicationKeyLastSerialized;
 	}
@@ -425,7 +425,7 @@ struct FConveyorBeltItems
 	float ConsumeAndUpdateConveyorOffsetDebt( float dt );
 
 
-	TArray< FConveyorBeltItem >& AnimRemoveList()
+	FORCEINLINE TArray< FConveyorBeltItem >& AnimRemoveList()
 	{
 		return AnimRemoveItems;
 	}
@@ -467,8 +467,7 @@ private:
 
 
 	class AFGBuildableConveyorBase* Owner = nullptr;
-
-	friend FConveyorBeltItemsBaseState;
+	
 	friend class AFGBuildableConveyorBelt;
 };
 
@@ -497,6 +496,7 @@ public:
 
 	// Begin AActor interface
 	virtual void GetLifetimeReplicatedProps( TArray< FLifetimeProperty >& OutLifetimeProps ) const override;
+	virtual void PreReplication( IRepChangedPropertyTracker& ChangedPropertyTracker ) override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay( const EEndPlayReason::Type endPlayReason ) override;
 	virtual void Serialize( FArchive& ar ) override;
@@ -536,19 +536,30 @@ public:
 	/** Get the location and direction of the conveyor at the given offset. */
 	virtual void GetLocationAndDirectionAtOffset( float offset, FVector& out_location, FVector& out_direction ) const PURE_VIRTUAL( , );
 
-	virtual void PreReplication( IRepChangedPropertyTracker& ChangedPropertyTracker ) override;
-
 	void SetConveyorBucketID( int32 ID );
 
 	FORCEINLINE int32 GetConveyorBucketID() const { return mConveyorBucketID; }
 
 	/** Returns how much room there currently is on the belt. If the belt is empty it will return the length of the belt */
-	float GetAvailableSpace() const;
+	FORCEINLINE float GetAvailableSpace() const
+	{
+		for ( int32 i = mItems.Num() - 1; i >= 0; --i )
+		{
+			if ( !mItems[ i ].bIsRemoved )
+			{
+				return mItems[ i ].Offset;
+			}
+		}
+
+		return GetLength();
+	}
 
 	/** Returns how much room there was on the belt after the last factory tick. If the belt is empty it will return the length of the belt */
 	float GetCachedAvailableSpace_Threadsafe() const;
 
 	void ReportInvalidStateAndRequestConveyorRepReset();
+
+	FORCEINLINE void MarkItemTransformsDirty() { mPendingUpdateItemTransforms = true; }
 protected:
 	// Begin Factory_ interface
 	virtual bool Factory_PeekOutput_Implementation( const class UFGFactoryConnectionComponent* connection, TArray< FInventoryItem >& out_items, TSubclassOf< UFGItemDescriptor > type ) const override;
@@ -559,11 +570,12 @@ protected:
 	virtual void GetDismantleInventoryReturns( TArray< FInventoryStack >& out_returns ) const override;
 	// End AFGBuildable interface
 
-	void MarkItemTransformsDirty() { mPendingUpdateItemTransforms = true; }
-
 	/** Called when the visuals, radiation etc need to be updated. */
-	virtual void TickItemTransforms( float dt ) PURE_VIRTUAL(,);
+	virtual void TickItemTransforms( float dt, bool bOnlyTickRadioActive = true ) PURE_VIRTUAL(,);
 
+	/* When using the exp - conveyor renderer tick the radio activity of the items. */
+	virtual void TickRadioactivity() PURE_VIRTUAL(,);
+	
 	//@todonow These can possibly be moved to private once Belt::OnUse has been moved to base.
 	/** Find the item closest to the given location. */
 	int32 FindItemClosestToLocation( const FVector& location ) const;
@@ -586,7 +598,11 @@ private:
 	 *
 	 * @return true if there is enough room for an item of size itemSize
 	 */
-	bool HasRoomOnBelt( float& out_availableSpace ) const;
+	FORCEINLINE bool HasRoomOnBelt( float& out_availableSpace ) const
+	{
+		out_availableSpace = GetAvailableSpace();
+		return out_availableSpace > AFGBuildableConveyorBase::ITEM_SPACING;
+	}
 
 	/**
 	*	Thread safe version to check available room on a belt. This uses a cached position of the last item offset to ensure thread safety
@@ -597,6 +613,7 @@ private:
 	*/
 	bool HasRoomOnBelt_ThreadSafe( float& out_availableSpace ) const;
 
+	friend class AFGConveyorItemSubsystem;
 
 public:
 	/** Default height above ground for conveyors. */

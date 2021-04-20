@@ -20,7 +20,7 @@ DECLARE_DELEGATE( FOnHotbarReplicated );
  * Collected data for a slot that is specified
  */
 USTRUCT( BlueprintType )
-struct FSlotData
+struct FACTORYGAME_API FSlotData
 {
 	GENERATED_BODY();
 
@@ -35,14 +35,13 @@ struct FSlotData
 	FORCEINLINE bool operator==( const FSlotData& other ) const{
 		return other.PingColor == PingColor && other.NametagColor == NametagColor;
 	}
-
 };
 
 /**
 * Data associated with a message
 */
 USTRUCT( BlueprintType )
-struct FMessageData
+struct FACTORYGAME_API FMessageData
 {
 	GENERATED_BODY();
 
@@ -65,14 +64,12 @@ struct FMessageData
 * A hotbar with a set of shortcuts that can be assigned and executed
 */
 USTRUCT( BlueprintType )
-struct FHotbar
+struct FACTORYGAME_API FHotbar
 {
 	GENERATED_BODY();
 
 	FHotbar(){}
-
 	FHotbar( class AFGPlayerState* owningState, const FHotbar& hotbar );
-
 	FHotbar( TArray< class UFGHotbarShortcut* > hotbarShortcuts );
 
 	UPROPERTY( SaveGame, BlueprintReadOnly )
@@ -83,14 +80,12 @@ struct FHotbar
 * A preset represents a way for players to create pre made hotbars they can replace there current hotbar with
 */
 USTRUCT( BlueprintType )
-struct FPresetHotbar
+struct FACTORYGAME_API FPresetHotbar
 {
 	GENERATED_BODY();
 
 	FPresetHotbar(){}
-
 	FPresetHotbar( class AFGPlayerState* owningState, const FPresetHotbar& presetHotbar );
-
 	FPresetHotbar( FText presetName, uint8 iconIndex, FHotbar hotbar ) :
 		PresetName( presetName ),
 		IconIndex( iconIndex ),
@@ -222,7 +217,6 @@ public:
 		check( T::StaticClass()->IsChildOf( UFGHotbarShortcut::StaticClass() ) );
 		return Cast< T >( CreateShortcut( shortcutClass ) );
 	}
-
 
 	/** Get current shortcuts */
 	void GetCurrentShortcuts( TArray< class UFGHotbarShortcut* >& out_shortcuts );
@@ -374,6 +368,28 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Inventory" )
 	void UpdateNumObservedInventorySlots();
 
+	/** Is this schematic saved as a favorite in the awesome shop */
+	UFUNCTION( BlueprintPure, Category = "FactoryGame|Awesome Shop" )
+	bool IsShopFavorite( TSubclassOf<class UFGSchematic> schematic ) const;
+
+	/** Get all schematics saved as a favorite in the awesome shop */
+	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Awesome Shop" )
+	TArray<TSubclassOf<class UFGSchematic>> GetShopFavorites() const;
+
+	/** Save this schematic as a favorite in the awesome shop */
+	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Awesome Shop" )
+	void SaveAsShopFavorite( TSubclassOf<class UFGSchematic> schematic );
+
+	/** Remove this schematic as a favorite in the awesome shop */
+	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Awesome Shop" )
+	void RemoveAsShopFavorite( TSubclassOf<class UFGSchematic> schematic );
+
+	/** Remove all favorite schematic in the awesome shop */
+	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Awesome Shop" )
+	void RemoveAllShopFavorites();
+
+	FORCEINLINE TArray< TSubclassOf< class UFGMapArea > >* GetPlayerVisitedAreas() { return &mVisitedAreas; };
+
 protected:
 	// Client get notified that the hotbar has changed
 	UFUNCTION()
@@ -436,6 +452,9 @@ protected:
 	/** If true, then we are server admin */
 	UPROPERTY( Replicated )
 	uint8 mIsServerAdmin : 1;
+
+	UPROPERTY(SaveGame, Replicated)
+	TArray< TSubclassOf< class UFGMapArea > > mVisitedAreas;
 private:
 	/** Each local player has their own tutorial subsystem */
 	UPROPERTY( SaveGame )
@@ -478,4 +497,9 @@ private:
 	/** How many inventory slots the player has observed that they have. Used to show when we have new available slots in the UI  */
 	UPROPERTY( SaveGame, Replicated )
 	int32 mNumObservedInventorySlots;
+
+	/** The schematics the player has selected as their favorites in the awesome shop */
+	UPROPERTY( SaveGame, Replicated )
+	TArray< TSubclassOf< class UFGSchematic > > mFavoriteShopSchematics;
+
 };

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@
  * A stop entry in the time table.
  */
 USTRUCT( BlueprintType )
-struct FTimeTableStop
+struct FACTORYGAME_API FTimeTableStop
 {
 	GENERATED_BODY()
 public:

@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 /*
 * Base VehicleSim for the 6W PhysX vehicle class
@@ -9,6 +9,7 @@
 #include "PhysicsPublic.h"
 #include "PhysXPublic.h"
 #include "FGWheeledVehicle.h"
+#include "DSOLGearbox.h"
 #include "FGWheeledVehicleMovementComponent6W.generated.h"
 
 
@@ -139,7 +140,7 @@ struct FVehicleTransmissionData6W
 };
 
 UCLASS(meta = (BlueprintSpawnableComponent))
-class UFGWheeledVehicleMovementComponent6W : public UWheeledVehicleMovementComponent
+class FACTORYGAME_API UFGWheeledVehicleMovementComponent6W : public UWheeledVehicleMovementComponent
 {
 	GENERATED_UCLASS_BODY()
 

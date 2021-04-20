@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -28,7 +28,7 @@ enum EGamePhase
  * Used for specifying what tiers are included in what game phase.
  */
 USTRUCT( BlueprintType )
-struct FPhaseTierInfo
+struct FACTORYGAME_API FPhaseTierInfo
 {
 	GENERATED_BODY()
 
@@ -61,7 +61,7 @@ struct FPhaseTierInfo
 * This is used to specify the cost for the different phases of the game.
 */
 USTRUCT( BlueprintType )
-struct FPhaseCost
+struct FACTORYGAME_API FPhaseCost
 {
 	GENERATED_BODY()
 

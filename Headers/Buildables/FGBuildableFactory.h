@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -9,7 +9,6 @@
 #include "FGReplicationDetailActor_BuildableFactory.h"
 #include "FGBuildableFactory.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_ThreeParams( EProductionStatusChange, class AFGBuildable*, EProductionStatus /*oldStatus*/, EProductionStatus /*newStatus*/);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnReplicationDetailActorCreated, class AActor*, replicationDetailActorOwner );
 
 /**
@@ -26,7 +25,7 @@ enum class EProductionStatus : uint8
 	IS_MAX
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam( EProductionStatusUpdateDeligate, EProductionStatus ); //@todonow Spelling Delegate and F instead of E
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FProductionStatusChanged, EProductionStatus, status );
 
 /** Delegate for when some binary state has changed */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FBuildingStateChanged, bool, state );
@@ -61,7 +60,6 @@ public:
 	//Begin IFGSignificanceInterface
 	virtual void GainedSignificance_Implementation() override;
 	virtual	void LostSignificance_Implementation() override;
-	virtual	float GetSignificanceBias() override;
 	virtual float GetSignificanceRange() override { return mSignificanceRange; }
 	virtual void GainedSignificance_Native() override;
 	virtual void LostSignificance_Native() override;
@@ -72,14 +70,31 @@ public:
 	virtual void Factory_Tick( float dt ) override;
 	// End Factory_ interface
 
+	// Begin IFGUseableInterface
+	virtual void OnUse_Implementation( class AFGCharacterPlayer* byCharacter, const FUseState& state ) override;
+	virtual void OnUseStop_Implementation( class AFGCharacterPlayer* byCharacter, const FUseState& state ) override;
+	virtual bool IsUseable_Implementation() const override;
+	// End IFGUseableInterface
+
 	// Begin IFGDismantleInterface
 	virtual void GetDismantleRefund_Implementation( TArray< FInventoryStack >& out_refund ) const override;
 	// End IFGDismantleInterface
 
 	// Begin IFGReplicationDetailActorOwnerInterface
-	virtual AFGReplicationDetailActor* GetReplicationDetailActor() override { return GetOrCreateReplicationDetailActor(); };
+	virtual AFGReplicationDetailActor* GetReplicationDetailActor( bool tryCreate = false ) override 
+	{
+		if( tryCreate )
+		{
+			return GetOrCreateReplicationDetailActor(); 
+		}
+		else
+		{
+			return mReplicationDetailActor;
+		}
+	};
 	virtual void OnBuildableReplicationDetailStateChange( bool newStateIsActive ) override;
 	virtual void OnReplicationDetailActorCreated() override;
+	virtual void OnReplicationDetailActorRemoved() override;
 	virtual UClass* GetReplicationDetailActorClass() const override { return AFGReplicationDetailActor_BuildableFactory::StaticClass(); };
 	// End IFGReplicationDetailActorOwnerInterface
 
@@ -100,17 +115,29 @@ public:
 	 * @return true if we have power; false if we do not have power or does not run on power.
 	 */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Power" )
-	virtual bool HasPower() const;
+	bool HasPower() const
+	{
+		return Factory_HasPower();
+	}
 
+	/* Native only version of RunsOnPower for inlining. */
+	FORCEINLINE virtual bool Factory_HasPower() const
+	{
+		return mHasPower;
+	}
+	
 	/**
 	 * Check if this machine runs on power.
 	 * @return - true if this machine runs on power; false if it does not.
 	 */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Power" )
-	bool RunsOnPower() const;
+	bool RunsOnPower() const { return Factory_RunsOnPower(); }
 
-	/**used for callback to vcchanged lites and such on indication objects*/
-	EProductionStatusUpdateDeligate mOnProductionStatusUpdateDeligate;
+	/* Native only version of RunsOnPower for inlining. */
+	FORCEINLINE virtual bool Factory_RunsOnPower() const
+	{
+		return mPowerInfo && mPowerConsumption > 0.0f;
+	}
 
 	/**
 	 * Get the power info for this factory.
@@ -122,6 +149,9 @@ public:
 	/** Get the power consumption for production. */
 	float GetIdlePowerConsumption() const;
 
+	/** Get the current producing consumption before overclocking is applied. */
+	virtual float GetProducingPowerConsumptionBase() const { return mPowerConsumption; }
+
 	/** The power consumption when producing. */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Power" )
 	float GetProducingPowerConsumption() const;
@@ -129,6 +159,8 @@ public:
 	/** The unmodified power consumption when producing. */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Power" )
 	float GetDefaultProducingPowerConsumption() const;
+
+	static float CalcPowerConsumption( float power, float overclock, float exponent );
 
 	/** Helper to get the power consumption for production at a certain potential. */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Power" )
@@ -146,7 +178,16 @@ public:
 	 * @return - true if producing; otherwise false.
 	 */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Production" )
-	virtual bool IsProducing() const;
+	bool IsProducing() const
+	{
+		return Factory_IsProducing();
+	}
+
+	/* Native version of IsProducing */
+	FORCEINLINE virtual bool Factory_IsProducing() const
+	{
+		return mIsProducing;
+	}
 
 	/**
 	 * Can we start production i.e. do we have the items needed for assembly etc.
@@ -165,7 +206,7 @@ public:
 	FORCEINLINE bool IsProductionPaused() const { return mIsProductionPaused; }
 
 	//@todomods This should be moddable without performance impact.
-	/** @return The status to display on the production indicator. */
+	/** @return The status to display on the production indicator, valid on server and client. */
 	UFUNCTION( BlueprintPure, Category = "FactoryGame|Factory|Production" )
 	virtual EProductionStatus GetProductionIndicatorStatus() const;
 
@@ -283,6 +324,9 @@ public:
 	  */
 	UFUNCTION( BlueprintCallable, Category = "FactoryGame|Factory|Effects" )
 	void TryStopProductionLoopEffects( bool didStopProducing );
+
+	/** Updates  EVisibilityBasedAnimTickOption on all cached skel meshes */
+	void UpdateAnimTickOption( EVisibilityBasedAnimTickOption newOption );
 protected:
 	/** Called whenever HasPower has changed, exposed here for cleaner/more optimized ways of changing state when the factory has power */
 	UFUNCTION( BlueprintImplementableEvent, CustomEventUsing = mHasOnHasPowerChanged, Category="FactoryGame|Factory|Power")
@@ -299,6 +343,13 @@ protected:
 	/** Native version of OnHasPowerChanged */
 	UFUNCTION()
 	void OnHasPowerChanged_Native( bool newHasPower );
+
+	/** Set a new current potential, used to catch all changes of current potential and broadcast an event */
+	void SetCurrentPotential( float newCurrentPotential );
+
+	/** Event for when current potential is changed*/
+	UFUNCTION( BlueprintImplementableEvent, Category = "FactoryGame|Factory|Productivity" )
+    void OnCurrentPotentialChanged( float newCurrentPotential );
 
 	// Begin AFGBuildable interface
 	virtual void OnReplicatingDetailsChanged() override;
@@ -358,14 +409,24 @@ protected:
 
 	virtual class AFGReplicationDetailActor* GetOrCreateReplicationDetailActor();
 
+	UFUNCTION()
+	virtual void OnRep_CurrentPotential();
+
 private:
 	/** Calls Start/Stop Producing on client */
 	UFUNCTION()
-	void OnRep_IsProducing();
+	virtual void OnRep_IsProducing();
+
 	UFUNCTION()
 	void OnPotentialInventoryItemRemoved( TSubclassOf< class UFGItemDescriptor > itemClass, int32 numRemoved );
 
 	class AFGReplicationDetailActor_BuildableFactory* GetCastRepDetailsActor() const { return Cast<AFGReplicationDetailActor_BuildableFactory>( mReplicationDetailActor ); } // @todo: make this a static function instead
+
+	//////////////////////////////////////////////////////////////////////////
+	/// Push Model Replication Setters
+	void SetIsProducing( uint8 isProducing );
+	void SetHasPower( uint8 hasPower );
+	void SetCurrentProductivity( uint8 productivity );
 
 public:
 	/** Power consumption of this factory. */
@@ -385,7 +446,9 @@ public:
 	UPROPERTY( EditDefaultsOnly, Category = "Power" ) //@todo Replicated
 	TSubclassOf< class UFGPowerInfoComponent > mPowerInfoClass;
 
-	static EProductionStatusChange OnProductionStatusChange;
+	/** Callback for when the production indicator state changes. Called locally on both server and client. */
+	UPROPERTY( BlueprintAssignable )
+	FProductionStatusChanged mOnProductionStatusChanged;
 
 protected:
 	friend class AFGReplicationDetailActor_BuildableFactory;
@@ -405,9 +468,6 @@ protected:
 	/** So that you can listen for when standby is toggled. True == Standby is active False == Standby was disabled */
 	UPROPERTY( BlueprintAssignable )
 	FBuildingStateChanged mOnHasStandbyChanged;
-
-	/**/
-	EProductionStatus mCachedProductionStatus;
 
 	/**
 	 * The minimum time one production cycle must take.
@@ -447,10 +507,6 @@ protected:
 	/** Set this to true if we want this building to be able to change the production rate potential with the "Slider of Potential" */
 	UPROPERTY( EditDefaultsOnly, Category = "Productivity" )
 	bool mCanChangePotential;
-
-	/** This is the current potential (overclock, overcharge) of this factory [0..N] */
-	UPROPERTY( SaveGame, Replicated, Meta = (NoAutoJson = true) )
-	float mCurrentPotential;
 
 	/** When ever a production cycle is completed we set the current potential to this value */
 	UPROPERTY( SaveGame, Replicated, Meta = (NoAutoJson = true) )
@@ -492,11 +548,14 @@ private:
 	UPROPERTY( SaveGame )
 	class UFGInventoryComponent* mInventoryPotential;
 
+	UPROPERTY()
 	class UFGReplicationDetailInventoryComponent* mInventoryPotentialHandler;
 
-	/** A bias to the significance value */
-	UPROPERTY( EditDefaultsOnly, Category = "Significance" )
-	float mSignificanceBias;
+	/** This is the current potential (overclock, overcharge) of this factory [0..N]
+	* [FreiholtzK:Fri/4-12-2020]  encapsulated to make sure we catch changes of this value and can broadcast them
+	*/
+	UPROPERTY( SaveGame, ReplicatedUsing = OnRep_CurrentPotential, Meta = (NoAutoJson = true) )
+	float mCurrentPotential;
 
 	/** How often effect update should update */
 	UPROPERTY( EditDefaultsOnly, Category = "Anim" )
@@ -507,6 +566,9 @@ private:
 
 	/** Cached value of Fluid Resource Stack Size ( set in begin play from the default stack enum ) */
 	int32 mCachedFluidStackSize;
+
+	/** The cached production status, evaluated once every tick. */
+	EProductionStatus mCachedProductionStatus;
 
 	/** A replicated compressed version of the productivity */
 	UPROPERTY( Replicated, Meta = (NoAutoJson = true) )
@@ -564,6 +626,10 @@ private:
 
 	/** Indicates if we have already started the production effects effects */
 	uint8 mDidStartProductionEffects : 1;
+
+	/** Caching all skel meshes so that we can set tick optimizations later from significance manager */
+	UPROPERTY()
+	TArray< USkeletalMeshComponent* > mCachedSkeletalMeshes;
 protected:
 	/** Indicates if the factory should be handled by significance manager */
 	UPROPERTY( EditDefaultsOnly, Category = "Significance" )

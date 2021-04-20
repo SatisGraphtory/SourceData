@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -45,10 +45,6 @@ public:
 	/** Handles the storage visibility depending on tutorial step */
 	UFUNCTION( BlueprintCallable, Category = "Trading Post" )
 	void UpdateStorageVisibility();
-
-	/** Returns the inventory component used in the storage box */
-	UFUNCTION( BlueprintPure, Category = "Trading Post" )
-	FORCEINLINE UFGInventoryComponent* GetStorageInventory() { return mStorageInventory; }
 
 	/** Returns level of trading post upgrade */
 	UFUNCTION( BlueprintPure, Category = "Trading Post" )
@@ -149,10 +145,6 @@ protected:
 	/** A cached schematic manager */
 	UPROPERTY()
 	class AFGSchematicManager* mSchematicManager;
-
-	/** The inventory to store everything in. */
-	UPROPERTY( SaveGame, Replicated )
-	class UFGInventoryComponent* mStorageInventory;
 
 	/** The starting resources in the tradingpost storage */
 	UPROPERTY( EditDefaultsOnly, Category = "Inventory" )

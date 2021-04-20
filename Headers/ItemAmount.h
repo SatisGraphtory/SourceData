@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@
  * E.g. a cost, a recipe product or ingredient.
  */
 USTRUCT( BlueprintType )
-struct FItemAmount
+struct FACTORYGAME_API FItemAmount
 {
 	GENERATED_BODY()
 

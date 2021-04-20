@@ -1,4 +1,4 @@
-// Copyright 2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -33,7 +33,7 @@ protected:
 };
 
 UCLASS()
-class UFGCDInitializing : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDInitializing : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -44,52 +44,52 @@ class UFGCDInitializing : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDInvalidAimLocation : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDInvalidAimLocation : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDInvalidAimLocation()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidAimLocation", "Invalid Aim Location!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidAimLocation", "Invalid aim location!" );
 	}
 };
 
 UCLASS()
-class UFGCDUnaffordable : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDUnaffordable : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 	
 	UFGCDUnaffordable()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDUnaffordable", "Can't Afford!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDUnaffordable", "Can't afford!" );
 	}
 };
 
 
 UCLASS()
-class UFGCDInvalidPlacement : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDInvalidPlacement : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDInvalidPlacement()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidPlacement", "Invalid Placement!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidPlacement", "Invalid placement!" );
 	}
 };
 
 UCLASS()
-class UFGCDEncroachingClearance : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDEncroachingClearance : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDEncroachingClearance()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDEncroachingClearance", "Encroaching other's Clearance!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDEncroachingClearance", "Encroaching other's clearance!" );
 	}
 };
 
 UCLASS()
-class UFGCDEncroachingPlayer : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDEncroachingPlayer : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -100,18 +100,18 @@ class UFGCDEncroachingPlayer : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDInvalidFloor : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDInvalidFloor : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDInvalidFloor()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidFloor", "Floor is too Steep!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDInvalidFloor", "Floor is too steep!" );
 	}
 };
 
 UCLASS()
-class UFGCDUniqueBuilding : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDUniqueBuilding : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -122,7 +122,7 @@ class UFGCDUniqueBuilding : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDMustSnap : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDMustSnap : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -133,7 +133,18 @@ class UFGCDMustSnap : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDShouldntSnap : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDMustSnapToCeiling : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDMustSnapToCeiling()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDMustSnapToCeiling", "This must be built on a ceiling!" );
+	}
+};
+
+UCLASS()
+class FACTORYGAME_API UFGCDShouldntSnap : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -144,7 +155,7 @@ class UFGCDShouldntSnap : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDNeedsResourceNode : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDNeedsResourceNode : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -155,40 +166,95 @@ class UFGCDNeedsResourceNode : public UFGConstructDisqualifier
 };
 
 UCLASS()
+class FACTORYGAME_API UFGCDMustSnapStation : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDMustSnapStation()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDMustSnapStation", "Must snap to a Drone Port!" );
+	}
+};
+
+UCLASS()
+class FACTORYGAME_API UFGCDOccupiedStation : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDOccupiedStation()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDOccupiedStation", "Drone Port is currently occupied!" );
+	}
+};
+
+UCLASS()
+class FACTORYGAME_API UFGCDDroneStationHasDrone : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDDroneStationHasDrone()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDDroneStationHasDrone", "Port already has a drone assigned to it!" );
+	}
+};
+
+UCLASS()
+class FACTORYGAME_API UFGCDNeedsFrackingCoreNode : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDNeedsFrackingCoreNode()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDNeedsFrackingCoreNode", "You need to place this on a Fracking Core Node!" );
+	}
+};
+
+UCLASS()
+class FACTORYGAME_API UFGCDNeedsFrackingSatelliteNode : public UFGConstructDisqualifier
+{
+	GENERATED_BODY()
+
+	UFGCDNeedsFrackingSatelliteNode()
+	{
+		mDisqfualifyingText = LOCTEXT( "UFGCDNeedsFrackingSatelliteNode", "You need to place this on an activated Fracking Satellite Node!" );
+	}
+};
+
+UCLASS()
 class UFGCDResourceNodeIsOccuped : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDResourceNodeIsOccuped()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDResourceNodeIsOccuped", "Resource Node is Occupied!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDResourceNodeIsOccuped", "Resource Node is occupied!" );
 	}
 };
 
 UCLASS()
-class UFGCDResourceIsTooShallow : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDResourceIsTooShallow : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDResourceIsTooShallow()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDResourceIsTooShallow", "Resource is not Deep Enough!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDResourceIsTooShallow", "Resource is not deep enough!" );
 	}
 };
 
 UCLASS()
-class UFGCDNeedsWaterVolume : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDNeedsWaterVolume : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
 	UFGCDNeedsWaterVolume()
 	{
-		mDisqfualifyingText = LOCTEXT( "UFGCDNeedsWaterVolume", "You need to place this on Deep Water!" );
+		mDisqfualifyingText = LOCTEXT( "UFGCDNeedsWaterVolume", "You need to place this on deep water!" );
 	}
 };
 
 UCLASS()
-class UFGCDResourceDeposit : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDResourceDeposit : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -199,7 +265,7 @@ class UFGCDResourceDeposit : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDWireSnap : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDWireSnap : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -210,7 +276,7 @@ class UFGCDWireSnap : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDWireTooLong : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDWireTooLong : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -221,7 +287,7 @@ class UFGCDWireTooLong : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDWireTooManyConnections : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDWireTooManyConnections : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -232,7 +298,7 @@ class UFGCDWireTooManyConnections : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDBeltMustSnap : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDBeltMustSnap : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -243,7 +309,7 @@ class UFGCDBeltMustSnap : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDConveyorTooLong : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDConveyorTooLong : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -254,7 +320,7 @@ class UFGCDConveyorTooLong : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDConveyorTooShort : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDConveyorTooShort : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -265,7 +331,7 @@ class UFGCDConveyorTooShort : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDConveyorTooSteep : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDConveyorTooSteep : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -276,7 +342,7 @@ class UFGCDConveyorTooSteep : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDConveyorInvalidShape : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDConveyorInvalidShape : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -287,7 +353,7 @@ class UFGCDConveyorInvalidShape : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDConveyorAttachmentTooSharpTurn : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDConveyorAttachmentTooSharpTurn : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -298,7 +364,7 @@ class UFGCDConveyorAttachmentTooSharpTurn : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDMustHaveRailRoadTrack : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDMustHaveRailRoadTrack : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -309,7 +375,7 @@ class UFGCDMustHaveRailRoadTrack : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDMustAttachToTrainPlatform : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDMustAttachToTrainPlatform : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -320,7 +386,7 @@ class UFGCDMustAttachToTrainPlatform : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDTrackTooLong : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDTrackTooLong : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -331,7 +397,7 @@ class UFGCDTrackTooLong : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDTrackTooShort : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDTrackTooShort : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -342,7 +408,7 @@ class UFGCDTrackTooShort : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDTrackTooSteep : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDTrackTooSteep : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -353,7 +419,7 @@ class UFGCDTrackTooSteep : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDTrackTrunToSharp : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDTrackTrunToSharp : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -364,7 +430,7 @@ class UFGCDTrackTrunToSharp : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeTooShort : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeTooShort : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -375,7 +441,7 @@ class UFGCDPipeTooShort : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeTooLong : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeTooLong : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -386,7 +452,7 @@ class UFGCDPipeTooLong : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeAttachmentTooSharpTurn : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeAttachmentTooSharpTurn : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -397,7 +463,7 @@ class UFGCDPipeAttachmentTooSharpTurn : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeMustSnap : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeMustSnap : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -408,7 +474,7 @@ class UFGCDPipeMustSnap : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeFluidTypeMismatch : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeFluidTypeMismatch : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -419,7 +485,7 @@ class UFGCDPipeFluidTypeMismatch : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeInvalidShape : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeInvalidShape : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 
@@ -430,7 +496,7 @@ class UFGCDPipeInvalidShape : public UFGConstructDisqualifier
 };
 
 UCLASS()
-class UFGCDPipeNoPathFound : public UFGConstructDisqualifier
+class FACTORYGAME_API UFGCDPipeNoPathFound : public UFGConstructDisqualifier
 {
 	GENERATED_BODY()
 	

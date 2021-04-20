@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -37,9 +37,6 @@ public:
 	/** Dumps the top playing components to log, grouped either by class or actor playing. */
 	UFUNCTION( exec )
 	void TrackAkComponents( bool byClass = true );
-	/** Dumps the stats for wwise memory pools to the log. */
-	UFUNCTION( exec )
-	void TrackAkMemoryPools();
 	/** Dumps all ak components with no position (0,0,0) or owner to the log. */
 	UFUNCTION( exec )
 	void TrackAkComponentsWithNoPositionOrOwner();
@@ -64,14 +61,17 @@ public:
 	void FixupBuiltByRecipeInOldSave( bool reapplyRecipeIfBetterMatchFound = false );
 
 	/** Dump some stats about the factory to the log such as number of buildings and kilometers of railway built. */
-	UFUNCTION( exec, CheatBoard, category = "Log" )
+	UFUNCTION( exec )
 	void DumpFactoryStatsToLog();
 
-	/** Copy the player coordinates to cliboard */
+	/** Copy the player coordinates to clipboard */
 	UFUNCTION( exec )
 	void CopyPlayerCoordinates();
 
 	/** Dumps the player coordinates to log, potentially with a label and copy to clipboard */
 	UFUNCTION( exec )
 	void DumpPlayerCoordinates( const FString& label = TEXT(""), bool copyToClipboard = false );
+
+	UFUNCTION( exec )
+	void DumpDynamicOptionsSettings();
 };

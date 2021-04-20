@@ -1,4 +1,4 @@
-// Copyright 2020 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -15,12 +15,15 @@ public:
 
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps ) const override;
 	virtual void InitReplicationDetailActor( class AFGBuildable* owningActor ) override;
+	virtual void RemoveDetailActorFromOwner() override;
 	virtual void FlushReplicationActorStateToOwner() override;
 	virtual bool HasCompletedInitialReplication() const override;
 
 	FORCEINLINE UFGInventoryComponent* GetWasteInventory() const { return mWasteInventory; }
 
 protected:
-	UPROPERTY( Replicated )
+	using AFGReplicationDetailActor_BuildableFactory::OnRep_Inventory;
+
+	UPROPERTY( ReplicatedUsing = OnRep_Inventory )
 	class UFGInventoryComponent* mWasteInventory;
 };

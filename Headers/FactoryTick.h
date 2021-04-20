@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Engine/EngineBaseTypes.h"
@@ -7,7 +9,7 @@
  * Tick function that calls AFGBuildable::TickFactory
  */
 USTRUCT()
-struct FFactoryTickFunction : public FTickFunction
+struct FACTORYGAME_API FFactoryTickFunction : public FTickFunction
 {
 	GENERATED_USTRUCT_BODY()
 

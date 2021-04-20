@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGOnlineSessionSettings.h"
@@ -11,7 +13,7 @@ DECLARE_DYNAMIC_DELEGATE_TwoParams( FOnAdminSaveGameComplete, bool, success, con
 typedef int16 RequestIdType;
 
 UCLASS(notplaceable)
-class AFGAdminInterface : public AInfo
+class FACTORYGAME_API AFGAdminInterface : public AInfo
 {
 	GENERATED_BODY()
 public:

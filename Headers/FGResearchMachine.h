@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -52,7 +52,10 @@ public:
 	FORCEINLINE bool IsResearchBeingConducted() const { return AFGResearchManager::Get( this->GetWorld() ) ? AFGResearchManager::Get( this->GetWorld() )->IsAnyResearchBeingConducted() : false; }
 
 protected:
+	// Begin AActor Interface
 	virtual void BeginPlay() override;
+	virtual void EndPlay( const EEndPlayReason::Type EndPlayReason );
+	// End AActor Interface
 
 private:
 	UFUNCTION( )

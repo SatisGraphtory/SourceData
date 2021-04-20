@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -11,7 +11,7 @@
 #include "FGResearchRecipe.generated.h"
 
 USTRUCT(Blueprintable)
-struct FResearchRecipeReward
+struct FACTORYGAME_API FResearchRecipeReward
 {
 	GENERATED_BODY()
 

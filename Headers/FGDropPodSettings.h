@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -8,7 +8,7 @@
 
 /** Describes a package of items you can get in a drop. */
 USTRUCT( BlueprintType )
-struct FDropPackage
+struct FACTORYGAME_API FDropPackage
 {
 	GENERATED_BODY()
 public:

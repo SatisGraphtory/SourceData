@@ -1,10 +1,12 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Animation/AnimNotifies/AnimNotify.h"
 #include "FGAnimNotify_Landed.generated.h"
 
 UCLASS()
-class UFGAnimNotify_Landed : public UAnimNotify
+class FACTORYGAME_API UFGAnimNotify_Landed : public UAnimNotify
 {
 	GENERATED_BODY()
 public:

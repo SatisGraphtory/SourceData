@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "GameFramework/DamageType.h"
@@ -19,7 +21,7 @@ enum EPlayOnDamageEvent
 };
 
 UCLASS()
-class UFGDamageType : public UDamageType
+class FACTORYGAME_API UFGDamageType : public UDamageType
 {
 	GENERATED_BODY()
 public:

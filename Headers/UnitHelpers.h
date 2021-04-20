@@ -1,11 +1,11 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
 /**
  * A collection of unit conversions to make code more readable.
  */
-struct FUnits
+struct FACTORYGAME_API FUnits
 {
 	/** Distance */
 	static FORCEINLINE float CmToM( float cm ) { return cm / 100.0f; }

@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -12,7 +12,7 @@
  * Function library for railroad related functions.
  */
 UCLASS()
-class UFGRailroadFunctionLibrary : public UBlueprintFunctionLibrary
+class FACTORYGAME_API UFGRailroadFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

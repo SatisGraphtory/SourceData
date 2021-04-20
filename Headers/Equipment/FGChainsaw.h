@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "FGEquipment.h"
@@ -6,7 +8,7 @@
 
 
 USTRUCT()
-struct FPickedUpInstance
+struct FACTORYGAME_API FPickedUpInstance
 {
 	GENERATED_BODY()
 
@@ -30,7 +32,7 @@ struct FPickedUpInstance
 };
 
 UCLASS()
-class AFGChainsaw : public AFGEquipment
+class FACTORYGAME_API AFGChainsaw : public AFGEquipment
 {
 	GENERATED_BODY()
 public:
@@ -64,6 +66,9 @@ public:
 
 	/** returns true if the specified player has a chainsaw equipped */
 	static bool DoesPlayerHaveChainsawEquipped( class AFGCharacterPlayer* player );
+
+	UFUNCTION( BlueprintImplementableEvent, Category = "Chainsaw" )
+	void CreatePhysicsFromFoliage( UStaticMesh* inMesh, FTransform inTransform );
 protected:
 	/**
 	 * Consumes fuel, returns false if we are out of fuel

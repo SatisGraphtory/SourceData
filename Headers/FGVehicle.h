@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -21,8 +21,7 @@ USTRUCT()
 struct FVehiclePhysicsData
 {
 	GENERATED_BODY()
-
-	/** Default ctor */
+	
 	FVehiclePhysicsData() {}
 
 	// Bone that have this information
@@ -37,7 +36,7 @@ struct FVehiclePhysicsData
  * Vehicle has a driver but has empty passenger seats                                                                    
  */
 UCLASS()
-class UFGUseState_VehicleHasDriver : public UFGUseState
+class FACTORYGAME_API UFGUseState_VehicleHasDriver : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -48,7 +47,7 @@ public:
  * Vehicle is in water, can't enter
  */
 UCLASS()
-class UFGUseState_VehicleInWater : public UFGUseState
+class FACTORYGAME_API UFGUseState_VehicleInWater : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -59,7 +58,7 @@ public:
  * Vehicle is fully occupied                                                                    
  */
 UCLASS()
-class UFGUseState_VehicleOccupied : public UFGUseState
+class FACTORYGAME_API UFGUseState_VehicleOccupied : public UFGUseState
 {
 	GENERATED_BODY()
 public:
@@ -67,7 +66,7 @@ public:
 };
 
 USTRUCT()
-struct FVehicleSeat
+struct FACTORYGAME_API FVehicleSeat
 {
 	GENERATED_BODY()
 
@@ -142,7 +141,6 @@ public:
 	//Begin IFGSignificanceInterface
 	virtual void GainedSignificance_Implementation() override;
 	virtual	void LostSignificance_Implementation() override;
-	virtual	float GetSignificanceBias() override;
 	virtual float GetSignificanceRange() override;
 	//End IFGSignificanceInterface
 
@@ -334,6 +332,10 @@ protected:
 	void ShowOutline( EOutlineColor color ) const;
 	/** Hide the outline for the vehicle. */
 	void HideOutline();
+
+	/** Called to update the camera when this vehicle is possessed by a player. */
+	UFUNCTION( BlueprintImplementableEvent )
+	void UpdateCamera( float DeltaTime );
 private:
 	/** Helpers */
 	void SetSelfDriving( bool newSelfDriving );
@@ -448,10 +450,6 @@ private:
 
 	/** Indicates if the vehicle is within significance distance */
 	uint8 mIsSignificant : 1;
-
-	/** A bias to the significance value */
-	UPROPERTY( EditDefaultsOnly, Category = "Significance" )
-	float mSignificanceBias;
 
 	/* Forces vehicle to be in simulation mode */
 	bool mForceSimulationMode;

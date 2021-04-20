@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "Equipment/FGEquipment.h"
@@ -5,7 +7,7 @@
 
 /** Holds information about resource node clusters. This could be saved in actors on the level for optimization. */
 USTRUCT( BlueprintType )
-struct FNodeClusterData
+struct FACTORYGAME_API FNodeClusterData
 {
 	GENERATED_BODY()
 
@@ -17,7 +19,7 @@ struct FNodeClusterData
 
 	/** Cost of schematic if there are more than once item in this array the true cost will be randomly selected. */
 	UPROPERTY( BluePrintReadOnly )
-	TArray< class AFGResourceNode* > Nodes;
+	TArray< class AFGResourceNodeBase* > Nodes;
 
 	/** The average location of all the nodes */
 	UPROPERTY( BluePrintReadOnly )
@@ -92,7 +94,7 @@ protected:
 	void GenerateNodeClusters();
 
 	/** Finds nodes within a radius of the passed node */
-	void GetNodesWithinDistance( AFGResourceNode* node, float dist, TArray< AFGResourceNode* >& clusterNodes, TArray< AFGResourceNode* >& remainingNodes );
+	void GetNodesWithinDistance( class AFGResourceNodeBase* node, float dist, TArray< class AFGResourceNodeBase* >& clusterNodes, TArray< class AFGResourceNodeBase* >& remainingNodes );
 
 protected:
 	/** This is the resource class to scan for */

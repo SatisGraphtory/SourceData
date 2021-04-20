@@ -1,3 +1,5 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "SharedInventoryStatePtr.h"
@@ -14,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FInventoryResized, int32, oldSize,
  * E.g. a weapon is of type 'Desc_NailGun' and has the state '9 nail loaded'.
  */
 USTRUCT( BlueprintType )
-struct FInventoryItem
+struct FACTORYGAME_API FInventoryItem
 {
 	GENERATED_BODY()
 public:
@@ -65,7 +67,7 @@ struct TStructOpsTypeTraits< FInventoryItem > : public TStructOpsTypeTraitsBase2
  * Note that single items in the inventory is described as a stack with 1 item.
  */
 USTRUCT( BlueprintType )
-struct FInventoryStack
+struct FACTORYGAME_API FInventoryStack
 {
 	GENERATED_BODY()
 public:
@@ -117,7 +119,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FOnItemRemoved, TSubclassOf< UFGIt
  * The outer object of this object needs to implement GetWorld
  */
 UCLASS( BlueprintType, ClassGroup = ( Custom ), meta = ( BlueprintSpawnableComponent ) )
-class UFGInventoryComponent : public UActorComponent, public IFGSaveInterface
+class FACTORYGAME_API UFGInventoryComponent : public UActorComponent, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:
@@ -143,6 +145,7 @@ public:
 
 	// Begin UActorComponent interface
 	virtual void OnRegister() override;
+	virtual void BeginPlay() override;
 	// End UActorComponent interface
 
 	/**
@@ -177,38 +180,29 @@ public:
 
 	//@todoinventory REFACTOR we need to consider state here somehow.
 	/** @return true if the item is allowed in this inventory */
-	UFUNCTION( BlueprintPure, CustomThunk, Category = "Inventory" )
+	UFUNCTION( BlueprintPure, Category = "Inventory" )
 	bool IsItemAllowed( TSubclassOf< UFGItemDescriptor > item, const int32 idx = -1 ) const; //INDEX_NONE
-
-	//[FreiholtzK:Mon/16-12-2019] Temporary debug code that should be removed after we have managed to find what passes in a null item descriptor here
-	DECLARE_FUNCTION( execIsItemAllowed )
-	{
-		P_GET_OBJECT( UClass, Z_Param_item );
-		P_GET_PROPERTY( UIntProperty, Z_Param_idx );
-		P_FINISH;
-		static bool hasCaughtNullpeter = false;
-		if( Z_Param_item == nullptr && !hasCaughtNullpeter )
-		{
-			hasCaughtNullpeter = true;
-			const FString Trace = Stack.GetStackTrace();
-			UE_LOG( LogBlueprintUserMessages, Log, TEXT( "\nUFGInventoryComponent::IsItemAllowed is called with nullpeter from BP:\n%s" ), *Trace );
-		}
-		P_NATIVE_BEGIN;
-		*( bool* )Z_Param__Result = P_THIS->IsItemAllowed( Z_Param_item, Z_Param_idx );
-		P_NATIVE_END;
-	}
 
 	/**
 	 * @return true if the index is a valid index.
 	 */
 	UFUNCTION( BlueprintPure, Category = "Inventory" )
-	bool IsValidIndex( int32 idx ) const;
+	FORCEINLINE bool IsValidIndex( int32 idx ) const
+	{
+		return idx >= 0 && idx < mInventoryStacks.Num();
+	}
 
 	/**
 	 * @return first empty index, -1 if none is found
 	 */
 	UFUNCTION( BlueprintPure, Category = "Inventory" )
 	int32 FindEmptyIndex() const;
+
+	/**
+	* Returns the first slot index that has any items on it
+	* If nothing exists in inventory -1 is returned
+	*/
+	int32 GetFirstIndexWithItem( int32 StartIndex = 0) const;
 
 	/**
 	 * Adds one item to the inventory.
@@ -354,7 +348,7 @@ public:
 
 	/** The total size of the inventory, when accessing inventory linearly using indices. */
 	UFUNCTION( BlueprintPure, Category = "Inventory" )
-	int32 GetSizeLinear(){ return mInventoryStacks.Num(); }
+	FORCEINLINE int32 GetSizeLinear() const { return mInventoryStacks.Num(); }
 
 	/** Returns index of the stack that has percentually the most items */
 	UFUNCTION( BlueprintPure, Category = "Inventory" )
@@ -367,7 +361,7 @@ public:
 	/** Returns the indexes of relevant stacks depending on the given items classes, 
 	indexes are sorted first by class and secondly in ascending stack size */ 
 	UFUNCTION( BlueprintPure, Category = "Inventory" )
-	TArray<int32> GetRelevantStackIndexes( TArray< TSubclassOf< class UFGItemDescriptor > > relevantClasses, int32 stackLimit );
+	TArray<int32> GetRelevantStackIndexes( TArray< TSubclassOf< class UFGItemDescriptor > > relevantClasses, int32 stackLimit = -1, bool sortResult = false );
 
 	/** Called when this inventory has been resized */
 	UPROPERTY( BlueprintAssignable, Category = "Inventory", DisplayName = "OnInventoryResized" )
@@ -484,6 +478,12 @@ protected:
 
 	/** Locks the inventory. Indicating that no items are allowed and you should not be able to drag stuff from it either */
 	bool mIsLocked;
+
+	/** Tracks whether or not its necessary to replicate allowed item descriptors to clients*/
+	bool mDoRepAllowedItemDescriptors;
+
+	/** Tracks whether or not its necessary to replicate arbitrary slot sizes to clients */
+	bool mDoRepArbitrarySlotSizes;
 
 private:
 	/** All items in the inventory */

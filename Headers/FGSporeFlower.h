@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -7,11 +7,12 @@
 #include "FGSaveInterface.h"
 #include "FGSignificanceInterface.h"
 #include "FGExplosiveDestroyableInterface.h"
+#include "FGStaticReplicatedActor.h"
 #include "FGSporeFlower.generated.h"
 
 /** todo: (a bigish one) this is just a start of what should be a much more complete nativization of the spore flower */
 UCLASS()
-class FACTORYGAME_API AFGSporeFlower : public AActor, public IFGSaveInterface, public IFGSignificanceInterface, public IFGExplosiveDestroyableInterface
+class FACTORYGAME_API AFGSporeFlower : public AFGStaticReplicatedActor, public IFGSaveInterface, public IFGSignificanceInterface, public IFGExplosiveDestroyableInterface
 {
 	GENERATED_BODY()
 

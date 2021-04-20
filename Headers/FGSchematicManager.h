@@ -1,4 +1,4 @@
-// Copyright 2016 Coffee Stain Studios. All Rights Reserved.
+// Copyright Coffee Stain Studios. All Rights Reserved.
 
 #pragma once
 
@@ -14,7 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnActiveSchematicChanged, TSubclas
 
 /** Holds info about a schematic and How much has been paid of on it. */
 USTRUCT()
-struct FSchematicCost
+struct FACTORYGAME_API FSchematicCost
 {
 	GENERATED_BODY()
 

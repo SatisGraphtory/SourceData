@@ -1,7 +1,10 @@
+// Copyright Coffee Stain Studios. All Rights Reserved.
+
 #pragma once
 
 #include "WheeledVehicleMovementComponent4W.h"
 #include "FGWheeledVehicle.h"
+#include "DSOLGearbox.h"
 #include "FGWheeledVehicleMovementComponent4W.generated.h"
 
 UCLASS(meta = (BlueprintSpawnableComponent))
