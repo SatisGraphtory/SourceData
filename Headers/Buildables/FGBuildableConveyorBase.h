@@ -559,7 +559,12 @@ public:
 
 	void ReportInvalidStateAndRequestConveyorRepReset();
 
-	FORCEINLINE void MarkItemTransformsDirty() { mPendingUpdateItemTransforms = true; }
+	FORCEINLINE void MarkItemTransformsDirty()
+	{
+		mPendingUpdateItemTransforms = true;
+		mFramesStalled = 0;
+	}
+	
 protected:
 	// Begin Factory_ interface
 	virtual bool Factory_PeekOutput_Implementation( const class UFGFactoryConnectionComponent* connection, TArray< FInventoryItem >& out_items, TSubclassOf< UFGItemDescriptor > type ) const override;
@@ -622,6 +627,14 @@ public:
 	/** Spacing between each conveyor item, from origo to origo. */
 	static constexpr float ITEM_SPACING = 120.0f;
 
+	// TODO maybe add a getter & Setter instead of moving this to public.
+	bool mPendingUpdateItemTransforms;
+
+	TMap< FName, TArray< FTransform > > mCachedTransforms;
+
+	/* Number of frames the conveyor belt has stalled used in the experimental conveyor renderer to see if we should cache or not. */
+	uint8 mFramesStalled;
+
 protected:
 
 	/** Speed of this conveyor. */
@@ -647,7 +660,6 @@ protected:
 
 private:
 	int16 mLastItemsDirtyKey = -2;
-	bool mPendingUpdateItemTransforms;
 
 	/** Indicates if the factory is within significance distance */
 	bool mIsSignificant;

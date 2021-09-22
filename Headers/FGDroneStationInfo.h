@@ -166,6 +166,9 @@ public:
 	UFUNCTION( BlueprintPure, Category = "Drone Station|Info" )
     TArray< AFGDroneStationInfo* > GetConnectedStations() const { return mConnectedStations; }
 
+	UFUNCTION( BlueprintPure, Category = "Drone Station|Info" )
+	const FVector& GetStationLocation() const { return mStationLocation; }
+
 	UFUNCTION( BlueprintCallable, Category = "Drone Station|Info" )
     void PairStation( AFGDroneStationInfo* otherStation );
 
@@ -343,6 +346,10 @@ private:
 	/** The station this info represents. */
 	UPROPERTY( SaveGame )
 	class AFGBuildableDroneStation* mStation;
+
+	/** Info objects cannot have a location, so in order to keep track of the station location on both client and server we'll just cache it and replicate it. */
+	UPROPERTY( Replicated )
+	FVector mStationLocation;
 
 	UPROPERTY( Replicated )
 	TSubclassOf< AFGBuildableDroneStation > mStationClass;
